@@ -1,0 +1,126 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    /*padding-left: 15px;
+    padding-right: 15px;*/    
+}
+.container-fluid {
+    width: 1370px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.remove-padding {
+    padding: 0;
+}
+
+.badge-success {
+    color: #fff;
+    background-color: #28a745;
+}
+
+.badge-warning {
+    color: #fff;
+    background-color: #ffc107;
+}
+
+.badge-info {
+    color: #fff;
+    background-color: #17a2b8;
+}
+/* Bootstrap Overrides Styles*/
+.navbar-inverse {
+    background-color: #FF4342;
+    border-color: #FF4342;
+}
+
+    .navbar-inverse .navbar-brand {
+        color: #fff;
+    }
+
+    .navbar-inverse .navbar-nav > li > a {
+        color: #fff;
+    }
+
+    .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+        color: #fff;
+        background-color: #d83132;
+    }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+}
+
+.container {
+    width: 80%;
+}
+
+.btn-primary {
+    background-color: #FF4342;
+    border-color: #FF4342;
+}
+
+    .btn-primary:hover {
+        background-color: #d83132;
+        border-color: #d83132;
+    }
+
+    .btn-primary:active:hover {
+        background-color: #FF4342;
+        border-color: #FF4342;
+    }
+
+.btn-link {
+    color: #17a2b8;
+}
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    color: #fff;
+    background-color: #FF4342;
+    border-color: #FF4342;
+}
+
+.imageContainer {
+    text-align: center;
+}
+
+    .imageContainer > img {
+        transition: transform 0.50s ease;
+    }
+
+        .imageContainer > img:hover {
+            -webkit-transform: scale(1.1);
+        }

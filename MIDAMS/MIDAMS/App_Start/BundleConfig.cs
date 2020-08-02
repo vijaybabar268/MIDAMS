@@ -25,6 +25,11 @@ namespace MIDAMS
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            /* Admin */
+            bundles.Add(new StyleBundle("~/Admin/Content/css").Include(
+                "~/Content/bootstrap.css",
+                "~/Areas/Admin/Content/css/AdminSite.css"));
         }
     }
 }

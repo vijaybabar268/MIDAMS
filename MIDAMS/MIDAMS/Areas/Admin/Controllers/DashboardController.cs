@@ -1,4 +1,6 @@
-﻿using MIDAMS.Models;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
+using MIDAMS.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +15,25 @@ namespace MIDAMS.Areas.Admin.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LogOff()
+        {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+
+            var baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
+            var url = baseUrl + "/Account/Login";
+            return Redirect(url);
+        }
+
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
         }
     }
 }

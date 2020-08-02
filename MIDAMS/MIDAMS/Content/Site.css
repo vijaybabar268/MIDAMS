@@ -26,3 +26,11 @@ textarea {
 .navbar-inverse .navbar-brand {
     color: #fff;
 }
+
+.navbar-inverse {    
+    border-color: #1066ed;
+    background: #0b9ff5;
+}
+.navbar-inverse .navbar-nav > li > a {
+    color: #fff;
+}
