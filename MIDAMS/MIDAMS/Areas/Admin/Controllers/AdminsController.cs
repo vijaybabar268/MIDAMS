@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNet.Identity.Owin;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using MIDAMS.Areas.Admin.Data;
 using MIDAMS.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -112,26 +115,28 @@ namespace MIDAMS.Areas.Admin.Controllers
                     return View("AdminForm", viewModel);
                 }
             }
-
-            var adminInDb = _context.Users.FirstOrDefault(x => x.Id == viewModel.Id);
-
-            if (adminInDb == null)
-                return HttpNotFound();
-
-            adminInDb.UserName = viewModel.UserName;
-            adminInDb.Email = viewModel.Email;
-
-            var resultUpdate = await UserManager.UpdateAsync(adminInDb);
-
-            if (resultUpdate.Succeeded)
-            {                
-                return RedirectToAction("Index", "Admins");
-            }
             else
             {
-                ModelState.AddModelError("", string.Join(", ", resultUpdate.Errors));
-                return View("AdminForm", viewModel);
-            }
+                var adminInDb = _context.Users.SingleOrDefault(x => x.Id == viewModel.Id);
+
+                if (adminInDb == null)
+                {
+                    return HttpNotFound();
+                }
+
+                adminInDb.UserName = viewModel.UserName;
+                adminInDb.Email = viewModel.Email;
+
+                var store = new UserStore<ApplicationUser>(new ApplicationDbContext());
+                var manager = new UserManager<ApplicationUser>(store);
+                await manager.UpdateAsync(adminInDb);
+                _context.SaveChanges();
+
+                UserManager.RemovePassword(viewModel.Id);
+                UserManager.AddPassword(viewModel.Id, viewModel.Password);
+                
+                return RedirectToAction("Index", "Admins");
+            }            
         }
 
         public ActionResult Edit(string id)
@@ -145,8 +150,7 @@ namespace MIDAMS.Areas.Admin.Controllers
             {
                 Id = adminInDb.Id,
                 UserName = adminInDb.UserName,
-                Email = adminInDb.Email,
-                //Password = adminInDb.PasswordHash,                
+                Email = adminInDb.Email
             };
 
             return View("AdminForm", viewModel);

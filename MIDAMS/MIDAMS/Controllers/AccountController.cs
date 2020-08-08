@@ -81,6 +81,11 @@ namespace MIDAMS.Controllers
 
             var user = UserManager.FindByEmail(model.Email);
 
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
             if (user.Status == false)
             {
                 ModelState.AddModelError("", "Your account is inactive.");
