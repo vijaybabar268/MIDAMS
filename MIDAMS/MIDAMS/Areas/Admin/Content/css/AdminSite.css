@@ -7,10 +7,12 @@ body {
     font-family: 'Poppins', sans-serif;
     padding-top: 0;
     padding-bottom: 0;
+    /*background-image: url('../img/bg.jpg');*/
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
+    margin-top:70px;
     /*padding-left: 15px;
     padding-right: 15px;*/    
 }
@@ -23,6 +25,9 @@ body {
 */
 .dl-horizontal dt {
     white-space: normal;
+}
+.btn-link {    
+    padding: 0;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -117,10 +122,37 @@ h6,
     text-align: center;
 }
 
-    .imageContainer > img {
-        transition: transform 0.50s ease;
-    }
+.imageContainer > img {
+    transition: transform 0.50s ease;
+}
 
-        .imageContainer > img:hover {
-            -webkit-transform: scale(1.1);
-        }
+.imageContainer > img:hover {
+    -webkit-transform: scale(1.1);
+}
+
+
+
+
+.adminTitle{
+    text-align:center;
+}
+.commonNewAddBtn {
+    margin-bottom: 10px;
+}
+.tableDiv {
+    min-height: 620px;
+    max-height: 620px;
+    overflow:auto;
+}
+.tableDiv table {
+    text-align: center;
+}
+.tableDiv table th {
+    text-align: center;
+    background: #FF4342;
+    color: #fff;
+}
+
+.validation-summary-errors ul {
+    padding: 0;    
+}

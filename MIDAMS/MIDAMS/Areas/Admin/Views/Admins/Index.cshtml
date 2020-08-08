@@ -1,0 +1,62 @@
+﻿@model IEnumerable<MIDAMS.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "Manage Admins";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    int srNo = 1;
+}
+
+<h2 class="adminTitle">Manage Admins</h2>
+
+@Html.ActionLink("Add New Admin", "New", "Admins", null, new { @class="btn btn-primary commonNewAddBtn" })
+
+<div class="tableDiv">
+    <table class="table table-bordered table-hover table-responsive table-striped">
+        <thead>
+            <tr>
+                <th>Sr</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@srNo</td>
+                        <td>@item.UserName</td>
+                        <td>@item.Email</td>
+                        <td>
+                            @{                                
+                                if (item.Status)
+                                {
+                                    <span class="text-success">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="text-danger">In-Active</span>
+                                }
+                            }
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", "Admins", new { id = item.Id }, new { @class = "btn btn-link" }) |
+                            @Html.ActionLink("Toggle Status", "ToggleStatus", "Admins", new { id = item.Id }, new { @class = "btn btn-link", onClick = "return confirm('Are you sure you want to perform this action?')" }) |
+
+                            @using (@Html.BeginForm("Delete", "Admins", FormMethod.Post, new { style= "display: inline;", onClick = "return confirm('Are you sure you want tp perform this action?')" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("id", item.Id)
+                                <button type="submit" class="btn btn-link">Delete</button>                                
+                            }
+                        </td>
+                    </tr>
+                    srNo++;
+                }
+            }
+        </tbody>
+    </table>
+</div>
+

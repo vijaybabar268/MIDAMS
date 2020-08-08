@@ -80,6 +80,13 @@ namespace MIDAMS.Controllers
             //var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
 
             var user = UserManager.FindByEmail(model.Email);
+
+            if (user.Status == false)
+            {
+                ModelState.AddModelError("", "Your account is inactive.");
+                return View(model);
+            }
+
             var result = await SignInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, shouldLockout: false);
 
             switch (result)
@@ -164,10 +171,10 @@ namespace MIDAMS.Controllers
                     //Temp Code
                     //var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
                     //var roleManager = new RoleManager<IdentityRole>(roleStore);
-                    //await roleManager.CreateAsync(new IdentityRole("Employee"));                    
-                    //await UserManager.AddToRoleAsync(user.Id, "Admin");
+                    //await roleManager.CreateAsync(new IdentityRole("Client"));
+                    //await UserManager.AddToRoleAsync(user.Id, "Client");
 
-                    await UserManager.AddToRoleAsync(user.Id, "Employee");
+                    await UserManager.AddToRoleAsync(user.Id, "Admin");
 
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
