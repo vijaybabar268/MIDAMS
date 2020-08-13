@@ -1,65 +1,23 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using MIDAMS.Areas.Admin.Data;
+﻿using MIDAMS.Areas.Admin.Data;
 using MIDAMS.Models;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MIDAMS.Areas.Admin.Controllers
 {
-    [Authorize(Roles = RoleName.Admin)]
     public class AdminsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private ApplicationUserManager _userManager;
-        private ApplicationSignInManager _signInManager;
-
+        
         public AdminsController()
         {
             _context = new ApplicationDbContext();
         }
-
-        public AdminsController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
-        }
-
-        public ApplicationSignInManager SignInManager
-        {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set
-            {
-                _signInManager = value;
-            }
-        }
-
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
-
+                        
         public ActionResult Index()
         {
             var admins = _context.Users
-                        .Where(r => r.Roles.Any(u => u.RoleId == "faa1d0c0-48b0-44de-8e1b-42f4f85e3c6e"))
+                        .Where(a => a.RoleId == 1)
                         .ToList();
 
             return View(admins);
@@ -67,26 +25,25 @@ namespace MIDAMS.Areas.Admin.Controllers
 
         public ActionResult New()
         {
-            var viewModel = new AdminFormViewModel()
-            {
-                Id = "",                
-            };
+            var viewModel = new AdminFormViewModel();            
 
             return View("AdminForm", viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Save(AdminFormViewModel viewModel)
+        public ActionResult Save(AdminFormViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
                 return View("AdminForm", viewModel);
             }
 
-            if (string.IsNullOrWhiteSpace(viewModel.Id))
+            if (viewModel.Id == 0)
             {
-                var totalAdminCount = _context.Users.Where(r => r.Roles.Any(u => u.RoleId == "faa1d0c0-48b0-44de-8e1b-42f4f85e3c6e")).Count();
+                var totalAdminCount = _context.Users
+                                    .Where(a => a.IsActive == true && a.RoleId == 1)
+                                    .Count();
 
                 if (totalAdminCount >= 5)
                 {
@@ -94,57 +51,39 @@ namespace MIDAMS.Areas.Admin.Controllers
                     return View("AdminForm", viewModel);
                 }
 
-                var admin = new ApplicationUser
+                var admin = new User
                 {
                     UserName = viewModel.UserName,
                     Email = viewModel.Email,
-                    Status = true
+                    RoleId = 1,
+                    IsActive = true
                 };
 
-                var result = await UserManager.CreateAsync(admin, viewModel.Password);
-
-                if (result.Succeeded)
-                {
-                    await UserManager.AddToRoleAsync(admin.Id, "Admin");
-                                        
-                    return RedirectToAction("Index", "Admins");
-                }
-                else
-                {                    
-                    ModelState.AddModelError("", string.Join(", ", result.Errors));
-                    return View("AdminForm", viewModel);
-                }
+                _context.Users.Add(admin);                                  
             }
             else
             {
-                var adminInDb = _context.Users.SingleOrDefault(x => x.Id == viewModel.Id);
+                var adminInDb = _context.Users
+                                .SingleOrDefault(a => a.Id == viewModel.Id);
 
                 if (adminInDb == null)
                 {
-                    return HttpNotFound();
+                    ModelState.AddModelError("", "Something went wrong.");
+                    return View("AdminForm", viewModel);
                 }
 
                 adminInDb.UserName = viewModel.UserName;
                 adminInDb.Email = viewModel.Email;
+                adminInDb.Password = viewModel.Password;
+            }
 
-                var store = new UserStore<ApplicationUser>(new ApplicationDbContext());
-                var manager = new UserManager<ApplicationUser>(store);
-                await manager.UpdateAsync(adminInDb);
-                _context.SaveChanges();
-
-                UserManager.RemovePassword(viewModel.Id);
-                UserManager.AddPassword(viewModel.Id, viewModel.Password);
-                
-                return RedirectToAction("Index", "Admins");
-            }            
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Admins");
         }
 
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id)
         {
-            var adminInDb = _context.Users.FirstOrDefault(x => x.Id == id);
-
-            if (adminInDb == null)
-                return HttpNotFound();
+            var adminInDb = _context.Users.FirstOrDefault(a => a.Id == id);
 
             var viewModel = new AdminFormViewModel()
             {
@@ -153,18 +92,24 @@ namespace MIDAMS.Areas.Admin.Controllers
                 Email = adminInDb.Email
             };
 
+            if (adminInDb == null)
+            {
+                ModelState.AddModelError("", "Something went wrong.");
+                return View("AdminForm", viewModel);
+            }
+
             return View("AdminForm", viewModel);
         }
 
 
-        public ActionResult ToggleStatus(string id)
+        public ActionResult ToggleStatus(int id)
         {
             var adminInDb = _context.Users.Find(id);
 
-            if (adminInDb.Status)
-                adminInDb.Status = false;
+            if (adminInDb.IsActive)
+                adminInDb.IsActive = false;
             else
-                adminInDb.Status = true;
+                adminInDb.IsActive = true;
 
             _context.SaveChanges();
 
@@ -173,7 +118,7 @@ namespace MIDAMS.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id)
         {
             var adminInDb = _context.Users.Find(id);
 

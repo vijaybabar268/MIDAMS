@@ -1,16 +1,7 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.Owin.Security;
-using MIDAMS.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Security;
+﻿using System.Web.Mvc;
 
 namespace MIDAMS.Areas.Admin.Controllers
 {
-    [Authorize(Roles = RoleName.Admin)]
     public class DashboardController : Controller
     {        
         public ActionResult Index()
@@ -22,19 +13,11 @@ namespace MIDAMS.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            Session.RemoveAll();
 
             var baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
             var url = baseUrl + "/Account/Login";
             return Redirect(url);
-        }
-
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
+        }               
     }
 }

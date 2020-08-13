@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MIDAMS.Models.ApplicationUser>
+﻿@model IEnumerable<MIDAMS.Models.User>
 
 @{
     ViewBag.Title = "Manage Admins";
@@ -8,7 +8,7 @@
 
 <h2 class="adminTitle">Manage Admins</h2>
 
-@Html.ActionLink("Add New Admin", "New", "Admins", null, new { @class="btn btn-primary commonNewAddBtn" })
+@Html.ActionLink("Add", "New", "Admins", null, new { @class="btn btn-primary commonNewAddBtn" })
 
 <div class="tableDiv">
     <table class="table table-bordered table-hover table-responsive table-striped">
@@ -30,14 +30,14 @@
                         <td>@item.UserName</td>
                         <td>@item.Email</td>
                         <td>
-                            @{                                
-                                if (item.Status)
-                                {
-                                    <span class="text-success">Active</span>
+                            @{
+                                if (item.IsActive)
+                                {                                    
+                                    <span class="badge badge-success">Active</span>
                                 }
                                 else
                                 {
-                                    <span class="text-danger">In-Active</span>
+                                    <span class="badge badge-warning">In-Active</span>
                                 }
                             }
                         </td>

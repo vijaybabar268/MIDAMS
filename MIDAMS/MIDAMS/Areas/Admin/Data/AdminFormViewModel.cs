@@ -8,7 +8,7 @@ namespace MIDAMS.Areas.Admin.Data
 {
     public class AdminFormViewModel
     {        
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -29,12 +29,12 @@ namespace MIDAMS.Areas.Admin.Data
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-
+                
         public string Title 
         {
             get
             {
-                return string.IsNullOrWhiteSpace(Id) ? "Create Admin" : "Edit Admin";                                
+                return Id == 0 ? "Create Admin" : "Edit Admin";
             }
         }
 

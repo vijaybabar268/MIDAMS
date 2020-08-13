@@ -1,17 +1,14 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
-using System.Linq;
+﻿using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MySql.Data.Entity;
 
 namespace MIDAMS.Models
 {
     [DbConfigurationType(typeof(MySqlEFConfiguration))]
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext()
-            : base("MySql_CS", throwIfV1Schema: false)
+            : base("MySql_CS")
         {
             this.Configuration.ValidateOnSaveEnabled = false;
         }
@@ -21,5 +18,8 @@ namespace MIDAMS.Models
             DbConfiguration.SetConfiguration(new MySqlEFConfiguration());
             return new ApplicationDbContext();
         }
+
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }
