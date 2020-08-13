@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace MIDAMS.Areas.Admin.Data
+namespace MIDAMS.Areas.Admin.ViewModels
 {
     public class AdminFormViewModel
     {        

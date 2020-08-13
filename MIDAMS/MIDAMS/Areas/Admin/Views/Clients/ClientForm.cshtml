@@ -1,0 +1,67 @@
+﻿@model MIDAMS.Areas.Admin.ViewModels.ClientFormViewModel
+
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="main-block">
+    @using (Html.BeginForm("Save", "Clients", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+    <div class="info">
+        @Html.HiddenFor(m => m.Id)
+        @Html.AntiForgeryToken()
+        <hr />
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        
+        <div class="form-group">
+            @Html.LabelFor(m => m.ClientName, new { @class = "col-sm-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.ClientName, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.RegionId, new { @class = "col-sm-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.RegionId, new SelectList(Model.Regions, "Id", "Name"), "--Select--", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.BranchLocationId, new { @class = "col-sm-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.BranchLocationId, new SelectList(Model.BranchLocations, "Id", "Name"), "--Select--", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.IndustryTypeId, new { @class = "col-sm-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.IndustryTypeId, new SelectList(Model.IndustryTypes, "Id", "Name"), "--Select--", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.SiteAddress, new { @class = "col-sm-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(m => m.SiteAddress, new { @class = "form-control", rows="4" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.CorpOfficeAddress, new { @class = "col-sm-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(m => m.CorpOfficeAddress, new { @class = "form-control", rows = "4" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <input type="submit" class="btn btn-primary" value="Save" />
+            </div>
+        </div>
+    </div>
+    }
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

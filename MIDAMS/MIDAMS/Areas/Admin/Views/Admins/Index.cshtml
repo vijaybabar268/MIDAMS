@@ -6,9 +6,9 @@
     int srNo = 1;
 }
 
-<h2 class="adminTitle">Manage Admins</h2>
+<h2 class="adminTitle">@ViewBag.Title</h2>
 
-@Html.ActionLink("Add", "New", "Admins", null, new { @class="btn btn-primary commonNewAddBtn" })
+@Html.ActionLink("New", "New", "Admins", null, new { @class="btn btn-primary commonNewAddBtn" })
 
 <div class="tableDiv">
     <table class="table table-bordered table-hover table-responsive table-striped">

@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.UI.WebControls.WebParts;
 
 namespace MIDAMS.Models
 {
@@ -25,5 +27,5 @@ namespace MIDAMS.Models
 
         [Column("role_id")]
         public int RoleId { get; set; }
-    }
+    }        
 }

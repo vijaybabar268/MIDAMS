@@ -1,4 +1,4 @@
-﻿using MIDAMS.Areas.Admin.Data;
+﻿using MIDAMS.Areas.Admin.ViewModels;
 using MIDAMS.Models;
 using System.Linq;
 using System.Web.Mvc;

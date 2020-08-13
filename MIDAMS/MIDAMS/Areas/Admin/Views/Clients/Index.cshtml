@@ -1,0 +1,77 @@
+﻿@model MIDAMS.Areas.Admin.ViewModels.ClientViewModel
+
+@{
+    ViewBag.Title = "Manage Clients";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    int srNo = 1;
+}
+
+<h2 class="adminTitle">@ViewBag.Title</h2>
+
+@Html.ActionLink("New", "New", "Clients", null, new { @class = "btn btn-primary commonNewAddBtn" })
+
+<div class="tableDiv">
+    <table class="table table-bordered table-hover table-responsive table-striped">
+        <thead>
+            <tr>
+                <th>Sr</th>
+                <th style="width: 12%;">Client Name</th>
+                <th>Region</th>
+                <th>Branch/Location</th>
+                <th>Industry Type</th>
+                <th style="width: 20%;">Site Address</th>
+                <th style="width: 20%;">Corporate Office Address</th>
+                <th>Status</th>
+                <th>Manage</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model.Clients)
+                {
+                    <tr>
+                        <td>@srNo</td>
+                        <td>@item.ClientName</td>
+                        <td>@Model.Regions.FirstOrDefault(x => x.Id == item.RegionId).Name</td>
+                        <td>@Model.BranchLocations.FirstOrDefault(x => x.Id == item.BranchLocationId).Name</td>
+                        <td>@Model.IndustryTypes.FirstOrDefault(x => x.Id == item.IndustryTypeId).Name</td>
+                        <td>@item.SiteAddress</td>
+                        <td>@item.CorpOfficeAddress</td>
+                        <td>
+                            @{
+                                if (item.IsActive)
+                                {
+                                    <span class="badge badge-success">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-warning">In-Active</span>
+                                }
+                            }
+                        </td>  
+                        <td>
+                            @Html.ActionLink("Role & Responsibility", "Edit", "Clients", new { id = item.Id }, new { @class = "btn btn-link" }) |
+                            @Html.ActionLink("Contacts", "Edit", "Clients", new { id = item.Id }, new { @class = "btn btn-link" }) |
+                            @Html.ActionLink("Relations", "Edit", "Clients", new { id = item.Id }, new { @class = "btn btn-link" })
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", "Clients", new { id = item.Id }, new { @class = "btn btn-link" }) |
+                            @Html.ActionLink("Toggle Status", "ToggleStatus", "Clients", new { id = item.Id }, new { @class = "btn btn-link", onClick = "return confirm('Are you sure you want to perform this action?')" }) |                            
+
+                            @using (@Html.BeginForm("Delete", "Clients", FormMethod.Post, new { style = "display: inline;", onClick = "return confirm('Are you sure you want tp perform this action?')" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("id", item.Id)
+
+                                <button type="submit" class="btn btn-link">Delete</button>
+                            }
+                        </td>
+                    </tr>
+                    srNo++;
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
