@@ -1,0 +1,50 @@
+﻿@model MIDAMS.Areas.Admin.ViewModels.RoleResponsibilityViewModel
+
+@{
+    ViewBag.Title = "Manage Roles & Responsibility for "+ Model.ClientName + ".";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    int srNo = 1;
+}
+
+<h2 class="adminTitle">@ViewBag.Title</h2>
+
+@Html.ActionLink("Add", "AddRoleAndResponsibility", "Clients", new { ClientId = Model.ClientId }, new { @class = "btn btn-primary commonNewAddBtn" })
+
+<div class="tableDiv">
+    <table class="table table-bordered table-hover table-responsive table-striped">
+        <thead>
+            <tr>
+                <th>Sr</th>                
+                <th>HO</th>
+                <th>Site</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model.ClientRoleResponsibilities)
+                {
+                    <tr>
+                        <td>@srNo</td>                        
+                        <td>@Model.Hos.FirstOrDefault(x => x.Id == item.HoId).Name</td>
+                        <td>@Model.Sites.FirstOrDefault(x => x.Id == item.SiteId).Name</td>                        
+                        <td>
+                            @Html.ActionLink("Edit", "EditRoleAndResponsibility", "Clients", new { id = item.Id }, new { @class = "btn btn-link" }) |
+                            @using (@Html.BeginForm("DeleteRoleAndResponsibility", "Clients", FormMethod.Post, new { style = "display: inline;", onClick = "return confirm('Are you sure you want tp perform this action?')" }))
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <input type="hidden" name="RoleResponsilinityId" value="@item.Id" />
+                                <input type="hidden" name="ClientId" value="@item.ClientId" />
+
+                                <button type="submit" class="btn btn-link">Delete</button>
+                            }
+                        </td>
+                    </tr>
+                    srNo++;
+                }
+            }
+        </tbody>
+    </table>
+</div>
+

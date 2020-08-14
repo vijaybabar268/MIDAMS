@@ -42,14 +42,15 @@ namespace MIDAMS.Models
     public class ClientRoleResponsibility
     {
         [Column("id")]
-        public byte Id { get; set; }
-
-        public string Name { get; set; }
-
+        public int Id { get; set; }
+                
+        [Column("ho_id")]
         public int HoId { get; set; }
 
+        [Column("site_id")]
         public int SiteId { get; set; }
 
+        [Column("client_id")]
         public int ClientId { get; set; }
     }
 
@@ -57,7 +58,7 @@ namespace MIDAMS.Models
     public class ClientContactDetail
     {
         [Column("id")]
-        public byte Id { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
 
@@ -93,7 +94,7 @@ namespace MIDAMS.Models
     public class ClientRelation
     {
         [Column("id")]
-        public byte Id { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
 

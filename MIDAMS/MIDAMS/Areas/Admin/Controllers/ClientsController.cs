@@ -13,10 +13,12 @@ namespace MIDAMS.Areas.Admin.Controllers
     public class ClientsController : Controller
     {
         private readonly ClientRepository _repo;
+        private readonly ApplicationDbContext _context;
 
         public ClientsController()
         {
             _repo = new ClientRepository();
+            _context = new ApplicationDbContext();
         }
 
         public ActionResult Index()
@@ -141,5 +143,114 @@ namespace MIDAMS.Areas.Admin.Controllers
 
             return RedirectToAction("Index", "Clients");
         }
+
+        // Role & Responsibility
+        public ActionResult RoleAndResponsibility(int id)
+        {
+            var rolesResponsibilities = _repo.GetClientRoleResponsibilities().Where(c => c.ClientId == id).ToList();
+
+            var viewModel = new RoleResponsibilityViewModel()
+            {
+                ClientRoleResponsibilities = rolesResponsibilities,
+                ClientId = _repo.GetClient(id).Id,
+                ClientName = _repo.GetClient(id).ClientName,
+                Hos = ManageDependancyData.GetRoleResponsibilities(),
+                Sites = ManageDependancyData.GetRoleResponsibilities()
+            };
+                        
+            return View("RoleAndResponsibility", viewModel);
+        }
+
+        public ActionResult AddRoleAndResponsibility(int ClientId)
+        {   
+            var viewModel = new ClientRoleResponsibilityFormViewModel()
+            { 
+                Id = 0,
+                Hos = ManageDependancyData.GetRoleResponsibilities(),
+                Sites = ManageDependancyData.GetRoleResponsibilities(),
+                ClientId = ClientId
+            };
+        
+            return View("RoleAndResponsibilityForm", viewModel);        
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SaveRoleAndResponsibility(ClientRoleResponsibilityFormViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("RoleAndResponsibilityForm", viewModel);
+            }
+
+            if (viewModel.Id == 0)
+            {
+                var clientRoleResponsibility = new ClientRoleResponsibility
+                {
+                    HoId = viewModel.HoId,
+                    SiteId = viewModel.SiteId,
+                    ClientId = viewModel.ClientId                                        
+                };
+
+                _repo.AddClientRoleResponsibility(clientRoleResponsibility);
+            }
+            else
+            {
+                var clientRoleResponsibilityInDb = _repo.GetClientRoleResponsibility(viewModel.Id);
+
+                if (clientRoleResponsibilityInDb == null)
+                {
+                    ModelState.AddModelError("", "Something went wrong.");
+                    return View("ClientForm", viewModel);
+                }
+
+                clientRoleResponsibilityInDb.HoId = viewModel.HoId;
+                clientRoleResponsibilityInDb.SiteId = viewModel.SiteId;
+                clientRoleResponsibilityInDb.ClientId = viewModel.ClientId;
+
+                _repo.UpdateClientRoleResponsibility(clientRoleResponsibilityInDb);
+            }
+
+            return RedirectToAction("RoleAndResponsibility", "Clients", new { id = viewModel.ClientId });
+        }
+
+        public ActionResult EditRoleAndResponsibility(int id)
+        {
+            var clientRoleResponsibilityInDb = _repo.GetClientRoleResponsibility(id);
+
+            var viewModel = new ClientRoleResponsibilityFormViewModel()
+            {
+                Id = clientRoleResponsibilityInDb.Id,
+                HoId = clientRoleResponsibilityInDb.HoId,
+                SiteId = clientRoleResponsibilityInDb.SiteId,
+                ClientId = clientRoleResponsibilityInDb.ClientId,
+                Hos = ManageDependancyData.GetRoleResponsibilities(),
+                Sites = ManageDependancyData.GetRoleResponsibilities()
+            };
+
+            if (clientRoleResponsibilityInDb == null)
+            {
+                ModelState.AddModelError("", "Something went wrong.");
+                return View("RoleAndResponsibilityForm", viewModel);
+            }
+
+            return View("RoleAndResponsibilityForm", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteRoleAndResponsibility(int RoleResponsilinityId, int ClientId)
+        {
+            var client = _repo.GetClientRoleResponsibility(RoleResponsilinityId);
+
+            _repo.RemoveClientRoleResponsibility(client);
+
+            return RedirectToAction("RoleAndResponsibility", "Clients", new { id = ClientId });
+        }
+
+        // Manage Contact Details
+
+
+        // Manage Relations
     }
 }

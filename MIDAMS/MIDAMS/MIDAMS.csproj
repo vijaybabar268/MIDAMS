@@ -187,7 +187,9 @@
     <Compile Include="Areas\Admin\Repositories\ClientRepository.cs" />
     <Compile Include="Areas\Admin\ViewModels\AdminFormViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\ClientFormViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ClientRoleResponsibilityFormViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\ClientViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\RoleResponsibilityViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -230,6 +232,8 @@
     <Content Include="Areas\Admin\Views\Shared\_Header.cshtml" />
     <Content Include="Areas\Admin\Views\Clients\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Clients\ClientForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Clients\RoleAndResponsibility.cshtml" />
+    <Content Include="Areas\Admin\Views\Clients\RoleAndResponsibilityForm.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

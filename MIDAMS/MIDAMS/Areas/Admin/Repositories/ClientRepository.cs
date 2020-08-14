@@ -43,5 +43,36 @@ namespace MIDAMS.Areas.Admin.Repositories
             _context.Clients.Remove(client);
             _context.SaveChanges();
         }
+
+        // Role & Responsibility
+        #region
+        public IEnumerable<ClientRoleResponsibility> GetClientRoleResponsibilities()
+        {
+            return _context.ClientRoleResponsibilities.ToList();
+        }
+
+        public ClientRoleResponsibility GetClientRoleResponsibility(int id)
+        {
+            return _context.ClientRoleResponsibilities.FirstOrDefault(c => c.Id == id);
+        }
+
+        public void AddClientRoleResponsibility(ClientRoleResponsibility client)
+        {
+            _context.ClientRoleResponsibilities.Add(client);
+            _context.SaveChanges();
+        }
+
+        public void UpdateClientRoleResponsibility(ClientRoleResponsibility client)
+        {
+            _context.Entry(client).State = System.Data.Entity.EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        public void RemoveClientRoleResponsibility(ClientRoleResponsibility client)
+        {
+            _context.ClientRoleResponsibilities.Remove(client);
+            _context.SaveChanges();
+        }
+        #endregion
     }
 }
