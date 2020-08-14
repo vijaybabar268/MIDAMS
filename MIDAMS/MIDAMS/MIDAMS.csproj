@@ -183,6 +183,7 @@
     <Compile Include="Areas\Admin\Controllers\AdminsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ClientsController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Admin\Repositories\AdminRepository.cs" />
     <Compile Include="Areas\Admin\Repositories\ClientRepository.cs" />
     <Compile Include="Areas\Admin\ViewModels\AdminFormViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\ClientFormViewModel.cs" />

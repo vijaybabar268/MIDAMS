@@ -1,4 +1,5 @@
-﻿using MIDAMS.Areas.Admin.ViewModels;
+﻿using MIDAMS.Areas.Admin.Repositories;
+using MIDAMS.Areas.Admin.ViewModels;
 using MIDAMS.Models;
 using System.Linq;
 using System.Web.Mvc;
@@ -7,16 +8,16 @@ namespace MIDAMS.Areas.Admin.Controllers
 {
     public class AdminsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly AdminRepository _repo;
         
         public AdminsController()
         {
-            _context = new ApplicationDbContext();
+            _repo = new AdminRepository();
         }
                         
         public ActionResult Index()
         {
-            var admins = _context.Users
+            var admins = _repo.GetAdmins()
                         .Where(a => a.RoleId == 1)
                         .ToList();
 
@@ -25,7 +26,10 @@ namespace MIDAMS.Areas.Admin.Controllers
 
         public ActionResult New()
         {
-            var viewModel = new AdminFormViewModel();            
+            var viewModel = new AdminFormViewModel() 
+            { 
+            
+            };            
 
             return View("AdminForm", viewModel);
         }
@@ -41,7 +45,7 @@ namespace MIDAMS.Areas.Admin.Controllers
 
             if (viewModel.Id == 0)
             {
-                var totalAdminCount = _context.Users
+                var totalAdminCount = _repo.GetAdmins()
                                     .Where(a => a.IsActive == true && a.RoleId == 1)
                                     .Count();
 
@@ -59,12 +63,11 @@ namespace MIDAMS.Areas.Admin.Controllers
                     IsActive = true
                 };
 
-                _context.Users.Add(admin);                                  
+                _repo.AddAdmin(admin);
             }
             else
             {
-                var adminInDb = _context.Users
-                                .SingleOrDefault(a => a.Id == viewModel.Id);
+                var adminInDb = _repo.GetAdmin(viewModel.Id);
 
                 if (adminInDb == null)
                 {
@@ -75,15 +78,16 @@ namespace MIDAMS.Areas.Admin.Controllers
                 adminInDb.UserName = viewModel.UserName;
                 adminInDb.Email = viewModel.Email;
                 adminInDb.Password = viewModel.Password;
-            }
 
-            _context.SaveChanges();
+                _repo.UpdateAdmin(adminInDb);
+            }
+            
             return RedirectToAction("Index", "Admins");
         }
 
         public ActionResult Edit(int id)
         {
-            var adminInDb = _context.Users.FirstOrDefault(a => a.Id == id);
+            var adminInDb = _repo.GetAdmin(id);
 
             var viewModel = new AdminFormViewModel()
             {
@@ -104,14 +108,14 @@ namespace MIDAMS.Areas.Admin.Controllers
 
         public ActionResult ToggleStatus(int id)
         {
-            var adminInDb = _context.Users.Find(id);
+            var adminInDb = _repo.GetAdmin(id);
 
             if (adminInDb.IsActive)
                 adminInDb.IsActive = false;
             else
                 adminInDb.IsActive = true;
 
-            _context.SaveChanges();
+            _repo.UpdateAdmin(adminInDb);
 
             return RedirectToAction("Index", "Admins");
         }
@@ -120,10 +124,7 @@ namespace MIDAMS.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
-            var adminInDb = _context.Users.Find(id);
-
-            _context.Users.Remove(adminInDb);
-            _context.SaveChanges();
+            _repo.RemoveAdmin(_repo.GetAdmin(id));
 
             return RedirectToAction("Index", "Admins");
         }
