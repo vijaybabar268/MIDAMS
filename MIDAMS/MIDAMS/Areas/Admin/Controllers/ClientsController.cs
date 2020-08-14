@@ -1,4 +1,5 @@
-﻿using MIDAMS.Areas.Admin.ViewModels;
+﻿using MIDAMS.Areas.Admin.Repositories;
+using MIDAMS.Areas.Admin.ViewModels;
 using MIDAMS.Models;
 using System;
 using System.Collections.Generic;
@@ -11,18 +12,18 @@ namespace MIDAMS.Areas.Admin.Controllers
 {
     public class ClientsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ClientRepository _repo;
 
         public ClientsController()
         {
-            _context = new ApplicationDbContext();
+            _repo = new ClientRepository();
         }
 
         public ActionResult Index()
         {
             var viewModel = new ClientViewModel()
             {
-                Clients = _context.Clients.ToList(),
+                Clients = _repo.GetClients(),
                 Regions = ManageDependancyData.GetRegions(),
                 BranchLocations = ManageDependancyData.GetBranchLocations(),
                 IndustryTypes = ManageDependancyData.GetIndustryTypes()
@@ -66,11 +67,11 @@ namespace MIDAMS.Areas.Admin.Controllers
                     IsActive = true
                 };
 
-                _context.Clients.Add(client);
+                _repo.AddClient(client);                
             }
             else
             {
-                var clientInDb = _context.Clients.SingleOrDefault(a => a.Id == viewModel.Id);
+                var clientInDb = _repo.GetClient(viewModel.Id);
 
                 if (clientInDb == null)
                 {
@@ -84,16 +85,16 @@ namespace MIDAMS.Areas.Admin.Controllers
                 clientInDb.IndustryTypeId = viewModel.IndustryTypeId;
                 clientInDb.SiteAddress = viewModel.SiteAddress;
                 clientInDb.CorpOfficeAddress = viewModel.CorpOfficeAddress;
+
+                _repo.UpdateClient(clientInDb);
             }
-
-            _context.SaveChanges();
-
+                                    
             return RedirectToAction("Index", "Clients");
         }
 
         public ActionResult Edit(int id)
         {
-            var clientInDb = _context.Clients.FirstOrDefault(a => a.Id == id);
+            var clientInDb = _repo.GetClient(id);
 
             var viewModel = new ClientFormViewModel()
             {
@@ -120,15 +121,15 @@ namespace MIDAMS.Areas.Admin.Controllers
 
         public ActionResult ToggleStatus(int id)
         {
-            var clientInDb = _context.Clients.Find(id);
+            var clientInDb = _repo.GetClient(id);
 
             if (clientInDb.IsActive)
                 clientInDb.IsActive = false;
             else
                 clientInDb.IsActive = true;
 
-            _context.SaveChanges();
-
+            _repo.UpdateClient(clientInDb);
+            
             return RedirectToAction("Index", "Clients");
         }
 
@@ -136,10 +137,7 @@ namespace MIDAMS.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
-            var clientInDb = _context.Clients.Find(id);
-
-            _context.Clients.Remove(clientInDb);
-            _context.SaveChanges();
+            _repo.RemoveClient(_repo.GetClient(id));
 
             return RedirectToAction("Index", "Clients");
         }

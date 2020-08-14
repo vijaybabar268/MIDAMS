@@ -183,6 +183,7 @@
     <Compile Include="Areas\Admin\Controllers\AdminsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ClientsController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Admin\Repositories\ClientRepository.cs" />
     <Compile Include="Areas\Admin\ViewModels\AdminFormViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\ClientFormViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\ClientViewModel.cs" />
@@ -277,7 +278,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Content\js\" />
-    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Repositories\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
