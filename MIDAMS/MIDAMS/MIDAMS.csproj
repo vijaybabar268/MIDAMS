@@ -183,12 +183,15 @@
     <Compile Include="Areas\Admin\Controllers\AdminsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ClientsController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Admin\Controllers\EmployeesController.cs" />
     <Compile Include="Areas\Admin\Repositories\AdminRepository.cs" />
     <Compile Include="Areas\Admin\Repositories\ClientRepository.cs" />
+    <Compile Include="Areas\Admin\Repositories\EmployeeRepository.cs" />
     <Compile Include="Areas\Admin\ViewModels\AdminFormViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\ClientFormViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\ClientRoleResponsibilityFormViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\ClientViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\EmployeeViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\RoleResponsibilityViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -200,6 +203,7 @@
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\ManageDependancyData.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Role.cs" />
@@ -234,6 +238,7 @@
     <Content Include="Areas\Admin\Views\Clients\ClientForm.cshtml" />
     <Content Include="Areas\Admin\Views\Clients\RoleAndResponsibility.cshtml" />
     <Content Include="Areas\Admin\Views\Clients\RoleAndResponsibilityForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Employees\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

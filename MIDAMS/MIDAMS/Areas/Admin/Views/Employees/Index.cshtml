@@ -1,0 +1,101 @@
+﻿@model MIDAMS.Areas.Admin.ViewModels.EmployeeViewModel
+
+@{
+    ViewBag.Title = "Manage Employees";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    int srNo = 1;
+}
+
+<h2 class="adminTitle">@ViewBag.Title</h2>
+
+@Html.ActionLink("New", "New", "Employees", null, new { @class = "btn btn-primary commonNewAddBtn" })
+
+<div class="tableDiv">
+    <table class="table table-bordered table-hover table-responsive table-striped">
+        <thead>
+            <tr>
+                <th>Sr</th>
+                <th style="width: 12%;">Name</th>
+                <th>Photo</th>
+                <th>Mobile No</th>
+                <th>Email</th>
+                <th width="6%">DOB</th>
+                <th width="6%">DOJ</th>
+                <th>Gender</th>
+                <th>Education</th>
+                <th>Designation</th>
+                <th>Marital Status</th> 
+                @*<th>Mother</th>                               
+                <th>Present Address</th>
+                <th>Permanent Address</th>
+                <th>Tel No</th>
+                <th>Identification Mark on Body</th>
+                <th>Referance 1 Name & Contact</th>
+                <th>Referance 2 Name & Contact</th>*@
+                <th>Status</th>
+                <th width="17%">Manage</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model.Employees)
+                {
+                    <tr>
+                        <td>@srNo</td>
+                        <td><a href="#">@item.FirstName @item.MiddleName @item.LastName</a></td>
+                        <td>@item.Photo</td>
+                        <td>@item.MobileNumber</td>
+                        <td>@item.EmailId</td>
+                        <td>@string.Format("{0:dd-MM-yyyy}", item.DateOfBirth)</td>
+                        <td>@string.Format("{0:dd-MM-yyyy}", item.DateOfJoining)</td>
+                        <td>@Model.Genders.FirstOrDefault(x => x.Id == item.GenderId).Name</td>
+                        <td>@Model.EducationQualifications.FirstOrDefault(x => x.Id == item.EducationQualificationId).Name</td>
+                        <td>@Model.Designations.FirstOrDefault(x => x.Id == item.DesignationId).Name</td>
+                        <td>@Model.MaritalStatus.FirstOrDefault(x => x.Id == item.MaritalStatusId).Name</td>
+                        @*<td>@item.MotherName</td>                        
+                        <td>@item.DateOfJoining</td>
+                        <td>@item.PresentAddress</td>
+                        <td>@item.PermanentAddress</td>
+                        <td>@item.TelNumber</td>
+                        <td>@item.IndetificationMarkOnBody</td>
+                        <td>@item.NameAndContactReference1</td>
+                        <td>@item.NameAndContactReference2</td>*@
+                        <td>
+                            @{
+                                if (item.IsActive)
+                                {
+                                    <span class="badge badge-success">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-warning">In-Active</span>
+                                }
+                            }
+                        </td>
+                        <td>
+                            @Html.ActionLink("Document Details", "EmployeeDocumentDetails", "Employees", new { id = item.Id }, new { @class = "btn btn-link" }) |
+                            @Html.ActionLink("Bank Details", "EmployeeBankDetails", "Employees", new { id = item.Id }, new { @class = "btn btn-link" }) |
+                            @Html.ActionLink("Provident Fund Dtl", "EmployeePFDetails", "Employees", new { id = item.Id }, new { @class = "btn btn-link" }) |
+                            @Html.ActionLink("State Insurance Dtl", "EmployeeStateInsuranceDetails", "Employees", new { id = item.Id }, new { @class = "btn btn-link" })
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", "Employees", new { id = item.Id }, new { @class = "btn btn-link" }) |
+                            @Html.ActionLink("Toggle Status", "ToggleStatus", "Employees", new { id = item.Id }, new { @class = "btn btn-link", onClick = "return confirm('Are you sure you want to perform this action?')" }) |
+
+                            @using (@Html.BeginForm("Delete", "Employees", FormMethod.Post, new { style = "display: inline;", onClick = "return confirm('Are you sure you want tp perform this action?')" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("id", item.Id)
+
+                                <button type="submit" class="btn btn-link">Delete</button>
+                            }
+                        </td>
+                    </tr>
+                    srNo++;
+                }
+            }
+        </tbody>
+    </table>
+</div>
+

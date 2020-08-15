@@ -23,6 +23,10 @@ namespace MIDAMS.Models
         public DbSet<User> Users { get; set; }
 
         public DbSet<Client> Clients { get; set; }
-        public DbSet<ClientRoleResponsibility> ClientRoleResponsibilities { get; set; } 
+        public DbSet<ClientRoleResponsibility> ClientRoleResponsibilities { get; set; }
+        // Ajit will add Client Contact Details Module
+        // Ajit will add Client Relation Module
+
+        public DbSet<Employee> Employees { get; set; }
     }
 }

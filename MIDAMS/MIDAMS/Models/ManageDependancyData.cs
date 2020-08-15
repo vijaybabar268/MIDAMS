@@ -73,7 +73,8 @@ namespace MIDAMS.Models
                 new Dropdown {Id =5, Name = "Manager"},
                 new Dropdown {Id =6, Name = "General Manager"},
                 new Dropdown {Id =7, Name = "AVP"},
-                new Dropdown {Id =8, Name = "VP"}
+                new Dropdown {Id =8, Name = "VP"},
+                new Dropdown {Id =9, Name = "Security Guard"}
             };
         }
 
@@ -111,5 +112,67 @@ namespace MIDAMS.Models
                 new Dropdown {Id =4, Name = "Corporate"}
             };
         }
+
+
+        // Employee Details
+        public static IEnumerable<Dropdown> GetEducationQualification()
+        {
+            return new List<Dropdown>()
+            {
+                new Dropdown {Id =1, Name="SSC"},
+                new Dropdown {Id =2, Name="HSC"},
+                new Dropdown {Id =3, Name="Graduate"}
+            };
+        }
+
+        public static IEnumerable<Dropdown> GetMaritalStatus()
+        {
+            return new List<Dropdown>()
+            {
+                new Dropdown {Id =1, Name="Married"},
+                new Dropdown {Id =2, Name="Unmarried"},
+                new Dropdown {Id =3, Name="Unknown"}
+            };
+        }
+
+        public static IEnumerable<Dropdown> GetGenders()
+        {
+            return new List<Dropdown>()
+            {
+                new Dropdown {Id =1, Name="Male"},
+                new Dropdown {Id =2, Name="Famale"}
+            };
+        }
+
+        public static IEnumerable<Dropdown> GetDisability()
+        {
+            return new List<Dropdown>()
+            {
+                new Dropdown {Id =1, Name="Vision Impairment"},
+                new Dropdown {Id =2, Name="Hard of Hearing"},
+                new Dropdown {Id =3, Name="Physical Disability"}
+            };
+        }
+
+        public static IEnumerable<Dropdown> GetBloodRelations()
+        {
+            return new List<Dropdown>()
+            {
+                new Dropdown {Id =1, Name="Mother"},
+                new Dropdown {Id =2, Name="Father"},
+                new Dropdown {Id =3, Name="Brother"},
+                new Dropdown {Id =4, Name="Sister"},
+                new Dropdown {Id =5, Name="Doughter"}
+            };
+        }
+
+        public static IEnumerable<Dropdown> GetMinorMajors()
+        {
+            return new List<Dropdown>()
+            {
+                new Dropdown {Id =1, Name="Minor"},
+                new Dropdown {Id =2, Name="Major"}                
+            };
+        }                
     }
 }
