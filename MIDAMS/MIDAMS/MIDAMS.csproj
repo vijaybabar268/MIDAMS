@@ -191,6 +191,7 @@
     <Compile Include="Areas\Admin\ViewModels\ClientFormViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\ClientRoleResponsibilityFormViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\ClientViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\EmployeeFormViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\EmployeeViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\RoleResponsibilityViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -239,6 +240,7 @@
     <Content Include="Areas\Admin\Views\Clients\RoleAndResponsibility.cshtml" />
     <Content Include="Areas\Admin\Views\Clients\RoleAndResponsibilityForm.cshtml" />
     <Content Include="Areas\Admin\Views\Employees\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Employees\EmployeeForm.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -288,8 +290,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Content\js\" />
-    <Folder Include="Repositories\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -129,12 +129,14 @@ h6,
 .imageContainer > img:hover {
     -webkit-transform: scale(1.1);
 }
+.input-validation-error {
+    border:1px solid #FF4342;
+}
 
 
 
-
-.adminTitle{
-    text-align:center;
+.adminTitle {
+    text-align: center;
 }
 .commonNewAddBtn {
     margin-bottom: 10px;

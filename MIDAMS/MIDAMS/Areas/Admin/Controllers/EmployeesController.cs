@@ -15,8 +15,7 @@ namespace MIDAMS.Areas.Admin.Controllers
 
         public EmployeesController()
         {
-            _repo = new EmployeeRepository();
-            
+            _repo = new EmployeeRepository();            
         }
 
         public ActionResult Index()
@@ -31,6 +30,20 @@ namespace MIDAMS.Areas.Admin.Controllers
             };
 
             return View(viewModel);
+        }
+
+        public ActionResult New()
+        {
+            var viewModel = new EmployeeFormViewModel()
+            {
+                Id = 0,
+                EducationQualifications = ManageDependancyData.GetEducationQualification(),
+                Designations = ManageDependancyData.GetDesignations(),
+                MaritalStatus = ManageDependancyData.GetMaritalStatus(),
+                Genders = ManageDependancyData.GetGenders()
+            };
+
+            return View("EmployeeForm", viewModel);
         }
     }
 }

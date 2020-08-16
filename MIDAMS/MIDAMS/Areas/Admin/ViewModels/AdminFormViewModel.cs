@@ -12,6 +12,7 @@ namespace MIDAMS.Areas.Admin.ViewModels
 
         [Required]
         [StringLength(100)]
+        [Display(Name = "Name")]
         public string UserName { get; set; }
 
         [Required]
@@ -25,6 +26,7 @@ namespace MIDAMS.Areas.Admin.ViewModels
         [Display(Name = "Password")]
         public string Password { get; set; }
 
+        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]

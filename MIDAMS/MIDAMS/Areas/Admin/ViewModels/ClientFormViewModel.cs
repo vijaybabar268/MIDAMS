@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI.WebControls;
 using static MIDAMS.Models.ManageDependancyData;
 using System.ComponentModel.DataAnnotations;
 
@@ -11,31 +8,34 @@ namespace MIDAMS.Areas.Admin.ViewModels
     public class ClientFormViewModel
     {
         public int Id { get; set; }
-
-        [Display(Name = "Site Code")]
-        public string SiteCode { get; set; }
-
+                
         public IEnumerable<Dropdown> Regions { get; set; }
 
+        [Required]
         [Display(Name = "Select Region")]
         public  int RegionId { get; set; }
 
         public IEnumerable<Dropdown> BranchLocations { get; set; }
 
+        [Required]
         [Display(Name = "Select Branch Location")]
         public int BranchLocationId { get; set; }
 
         public IEnumerable<Dropdown> IndustryTypes { get; set; }
 
+        [Required]
         [Display(Name = "Select Industry Type")]
         public int IndustryTypeId { get; set; }
 
+        [Required]
         [Display(Name = "Client Name")]
         public string ClientName { get; set; }
 
+        [Required]
         [Display(Name = "Site Address")]
         public string SiteAddress { get; set; }
 
+        [Required]
         [Display(Name = "Corporate Office Address")]
         public string CorpOfficeAddress { get; set; }
 
