@@ -12,13 +12,11 @@ namespace MIDAMS.Areas.Admin.Controllers
 {
     public class ClientsController : Controller
     {
-        private readonly ClientRepository _repo;
-        private readonly ApplicationDbContext _context;
+        private readonly ClientRepository _repo;        
 
         public ClientsController()
         {
             _repo = new ClientRepository();
-            _context = new ApplicationDbContext();
         }
 
         public ActionResult Index()

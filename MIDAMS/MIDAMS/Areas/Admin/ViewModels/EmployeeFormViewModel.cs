@@ -34,7 +34,7 @@ namespace MIDAMS.Areas.Admin.ViewModels
         public IEnumerable<Dropdown> Designations { get; set; }
 
         [Required]
-        [Display(Name = "Select Designations")]
+        [Display(Name = "Select Designation")]
         public int DesignationId { get; set; }
 
         public IEnumerable<Dropdown> MaritalStatus { get; set; }
