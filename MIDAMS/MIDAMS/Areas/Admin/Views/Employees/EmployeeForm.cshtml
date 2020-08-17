@@ -8,7 +8,7 @@
 <h2>@ViewBag.Title</h2>
 
 <div class="main-block">
-    @using (Html.BeginForm("Save", "Employees", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    @using (Html.BeginForm("Save", "Employees", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
     {
         <div class="info">
             @Html.HiddenFor(m => m.Id)

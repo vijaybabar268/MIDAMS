@@ -3,6 +3,8 @@ using MIDAMS.Areas.Admin.ViewModels;
 using MIDAMS.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -48,13 +50,41 @@ namespace MIDAMS.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(EmployeeFormViewModel viewModel)
+        public ActionResult Save(EmployeeFormViewModel viewModel, HttpPostedFileBase Photo)
         {
             if (!ModelState.IsValid)
             {
                 return View("EmployeeForm", viewModel);
             }
 
+            if (Photo == null)
+            {
+                ModelState.AddModelError("Photo", "Photo can't be blank");
+                return View("EmployeeForm", viewModel);
+            }
+
+            if (Photo.ContentLength > 2000000)
+            {
+                ModelState.AddModelError("Photo", "Photo can't be more than 2Mb Size.");
+                return View("EmployeeForm", viewModel);
+            }
+
+            string basePath = Server.MapPath("~");
+            string folderPath = "Upload\\";
+            string folderFullPath = basePath + "" + folderPath;
+            string fillName = string.Format(DateTime.Now.Day + "" + DateTime.Now.Month + "" + DateTime.Now.Year + "" + DateTime.Now.Hour + "" + DateTime.Now.Minute + "" + DateTime.Now.Second + "" + Path.GetExtension(Photo.FileName));
+
+            if (!Directory.Exists(folderFullPath))
+            {
+                Directory.CreateDirectory(folderFullPath);
+            }
+
+            Bitmap bmpPostedImage = new System.Drawing.Bitmap(Photo.InputStream);
+            var image = ScaleImage(bmpPostedImage, 320, null);
+                        
+            image.Save(Path.Combine(folderFullPath, fillName));
+            viewModel.Photo = folderPath + "" + fillName;
+                        
             if (viewModel.Id == 0)
             {
                 var employee = new Employee
@@ -112,11 +142,38 @@ namespace MIDAMS.Areas.Admin.Controllers
                 employeeInDb.IndetificationMarkOnBody = viewModel.IndetificationMarkOnBody;
                 employeeInDb.NameAndContactReference1 = viewModel.NameAndContactReference1;
                 employeeInDb.NameAndContactReference2 = viewModel.NameAndContactReference2;
+                employeeInDb.Photo = viewModel.Photo;
 
                 _repo.UpdateEmployee(employeeInDb);
             }
 
             return RedirectToAction("Index", "Employees");
+        }
+
+        private static Image ScaleImage(Image image, int maxHeight, int? maxWidth)
+        {
+            if (!maxWidth.HasValue)
+            {
+                var ratio = (double)maxHeight / image.Height;
+                var newWidth = (int)(image.Width * ratio);
+                var newHeight = (int)(image.Height * ratio);
+
+                var newImage = new Bitmap(newWidth, newHeight);
+                using (var g = Graphics.FromImage(newImage))
+                {
+                    g.DrawImage(image, 0, 0, newWidth, newHeight);
+                }
+                return newImage;
+            }
+            else
+            {
+                var newImage = new Bitmap((int)maxWidth, maxHeight);
+                using (var g = Graphics.FromImage(newImage))
+                {
+                    g.DrawImage(image, 0, 0, (int)maxWidth, maxHeight);
+                }
+                return newImage;
+            }
         }
 
         public ActionResult Edit(int id)

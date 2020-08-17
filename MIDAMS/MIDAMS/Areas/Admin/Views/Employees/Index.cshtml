@@ -44,7 +44,7 @@
                     <tr>
                         <td>@srNo</td>
                         <td><a href="#">@item.FirstName @item.MiddleName @item.LastName</a></td>
-                        <td>@item.Photo</td>
+                        <td><img height="120" width="125" src="@Request.Url.GetLeftPart(UriPartial.Authority)//@item.Photo" /> </td>
                         <td>@item.MobileNumber</td>
                         <td>@item.EmailId</td>
                         <td>@string.Format("{0:dd-MM-yyyy}", item.DateOfBirth)</td>
