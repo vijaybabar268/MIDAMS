@@ -59,6 +59,7 @@ namespace MIDAMS.Areas.Admin.Controllers
                 {
                     UserName = viewModel.UserName,
                     Email = viewModel.Email,
+                    Password = viewModel.Password,
                     RoleId = 1,
                     IsActive = true
                 };

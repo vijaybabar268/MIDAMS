@@ -8,13 +8,13 @@
 
 <h2 class="adminTitle">@ViewBag.Title</h2>
 
-@Html.ActionLink("New", "New", "Admins", null, new { @class="btn btn-primary commonNewAddBtn" })
+@Html.ActionLink("New", "New", "Admins", null, new { @class = "btn btn-primary commonNewAddBtn" })
 
 <div class="tableDiv">
-    <table class="table table-bordered table-hover table-responsive table-striped">
+    <table id="adminTbl" class="table table-bordered table-hover table-responsive table-striped">
         <thead>
             <tr>
-                <th>Sr</th>
+                @*<th>Sr</th>*@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Status</th>
@@ -22,41 +22,102 @@
             </tr>
         </thead>
         <tbody>
-            @{
-                foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@srNo</td>
-                        <td>@item.UserName</td>
-                        <td>@item.Email</td>
-                        <td>
-                            @{
-                                if (item.IsActive)
-                                {                                    
-                                    <span class="badge badge-success">Active</span>
+            @*@{
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@srNo</td>
+                            <td>@item.UserName</td>
+                            <td>@item.Email</td>
+                            <td>
+                                @{
+                                    if (item.IsActive)
+                                    {
+                                        <span class="badge badge-success">Active</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-warning">In-Active</span>
+                                    }
                                 }
-                                else
-                                {
-                                    <span class="badge badge-warning">In-Active</span>
-                                }
-                            }
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", "Admins", new { id = item.Id }, new { @class = "btn btn-link" }) |
-                            @Html.ActionLink("Toggle Status", "ToggleStatus", "Admins", new { id = item.Id }, new { @class = "btn btn-link", onClick = "return confirm('Are you sure you want to perform this action?')" }) |
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", "Admins", new { id = item.Id }, new { @class = "btn btn-link" }) |
+                                @Html.ActionLink("Toggle Status", "ToggleStatus", "Admins", new { id = item.Id }, new { @class = "btn btn-link", onClick = "return confirm('Are you sure you want to perform this action?')" }) |
 
-                            @using (@Html.BeginForm("Delete", "Admins", FormMethod.Post, new { style= "display: inline;", onClick = "return confirm('Are you sure you want tp perform this action?')" }))
-                            {
-                                @Html.AntiForgeryToken()
-                                @Html.Hidden("id", item.Id)
-                                <button type="submit" class="btn btn-link">Delete</button>                                
-                            }
-                        </td>
-                    </tr>
-                    srNo++;
-                }
-            }
+                                @using (@Html.BeginForm("Delete", "Admins", FormMethod.Post, new { style= "display: inline;", onClick = "return confirm('Are you sure you want tp perform this action?')" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.Hidden("id", item.Id)
+                                    <button type="submit" class="btn btn-link">Delete</button>
+                                }
+                            </td>
+                        </tr>
+                        srNo++;
+                    }
+                }*@
         </tbody>
     </table>
 </div>
 
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            var table = $("#adminTbl").DataTable({
+                ajax: {
+                    url: "/Api/Admin",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "username",
+                        render: function (data, type, admin) {
+                            return '<a href="javascript:void(0)" title=' + admin.UserName + '>' + admin.UserName + '</a>';
+                        }
+                    },
+                    {
+                        data: "email",
+                        render: function (data, type, admin) {
+                            return '' + admin.Email + '';
+                        }
+                    },
+                    {
+                        data: "isactive",
+                        render: function (data, type, admin) {
+                            if (admin.IsActive === true)
+                                return "<span class='badge badge-success'>Active</span>";
+                            else {
+                                return "<span class='badge badge-warning'>Inactive</span>";
+                            }
+                        }
+                    },
+                    {
+                        data: "id",
+                        render: function (data, type, admin) {
+                            return  '<a class="btn btn-link" href="Admins/Edit/' + admin.Id + '">Edit</a> | ' +
+                                    '<a class="btn btn-link" href="Admins/ToggleStatus/' + admin.Id + '">Toggle Status</a> | ' +
+                                    '<button class="btn btn-link js-delete" data-admin-id="' + admin.Id + '">Delete</button>';
+                        }
+                    }
+                ]
+            });
+
+            $("#adminTbl").on("click", ".js-delete", function () {
+                var button = $(this);
+                if (confirm("Are you sure you want to perform these action?")) {                    
+                    $.ajax({
+                        url: "/Api/Admin/" + button.attr("data-admin-id"),
+                        method: "DELETE",
+                        success: function () {
+                            table.row(button.parents("tr")).remove().draw();
+                        }, error: function (error) {
+                            console.log("error");
+                        }
+                    })
+                }
+
+            });
+        });
+    </script>
+}

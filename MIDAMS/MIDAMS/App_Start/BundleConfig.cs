@@ -20,7 +20,9 @@ namespace MIDAMS
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+                "~/Scripts/datatables/jquery.datatables.js",
+                "~/Scripts/datatables/datatables.bootstrap.js",
+                "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
@@ -29,6 +31,7 @@ namespace MIDAMS
             /* Admin */
             bundles.Add(new StyleBundle("~/Admin/Content/css").Include(
                 "~/Content/bootstrap.css",
+                "~/Content/datatables/css/datatables.bootstrap.css",
                 "~/Areas/Admin/Content/css/AdminSite.css"));
         }
     }

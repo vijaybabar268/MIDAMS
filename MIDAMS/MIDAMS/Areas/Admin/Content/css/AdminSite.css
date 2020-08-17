@@ -142,9 +142,9 @@ h6,
     margin-bottom: 10px;
 }
 .tableDiv {
-    min-height: 620px;
+   /* min-height: 620px;
     max-height: 620px;
-    overflow:auto;
+    overflow:auto;*/
 }
 .tableDiv table {
     text-align: center;
