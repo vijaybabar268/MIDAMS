@@ -53,7 +53,8 @@
                         <td>
                             @Html.ActionLink("Role & Responsibility", "RoleAndResponsibility", "Clients", new { id = item.Id }, new { @class = "btn btn-link" }) |
                             @Html.ActionLink("Contacts", "Edit", "Clients", new { id = item.Id }, new { @class = "btn btn-link" }) |
-                            @Html.ActionLink("Relations", "Edit", "Clients", new { id = item.Id }, new { @class = "btn btn-link" })
+                            @Html.ActionLink("Relations", "Edit", "Clients", new { id = item.Id }, new { @class = "btn btn-link" }) |
+                            @Html.ActionLink("Add Employee", "AddEmployees", "Clients", new { id = item.Id }, new { @class = "btn btn-link" })
                         </td>
                         <td>
                             @Html.ActionLink("Edit", "Edit", "Clients", new { id = item.Id }, new { @class = "btn btn-link" }) |

@@ -195,6 +195,7 @@
     <Compile Include="Areas\Admin\Controllers\ClientsController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\EmployeesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MapEmployeesController.cs" />
     <Compile Include="Areas\Admin\Repositories\AdminRepository.cs" />
     <Compile Include="Areas\Admin\Repositories\ClientRepository.cs" />
     <Compile Include="Areas\Admin\Repositories\EmployeeRepository.cs" />
@@ -204,6 +205,8 @@
     <Compile Include="Areas\Admin\ViewModels\ClientViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\EmployeeFormViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\EmployeeViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\MapEmployeeFormViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\MapEmployeeViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\RoleResponsibilityViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -412,6 +415,8 @@
     <Content Include="Content\DataTables\css\semanticui.scss" />
     <Content Include="Content\DataTables\css\mixins.scss" />
     <Content Include="Content\DataTables\css\common.scss" />
+    <Content Include="Areas\Admin\Views\MapEmployees\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MapEmployees\MapEmployeeForm.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />

@@ -28,5 +28,13 @@ namespace MIDAMS.Models
         // Ajit will add Client Relation Module
 
         public DbSet<Employee> Employees { get; set; }
+        // Ajit will add employee doc details
+        // Ajit will add employee bank details
+        // Ajit will add employee pf details
+        // Ajit will add employee state insurance details
+
+        // Ajit will add Vendor module
+
+        public DbSet<MapEmployeesToClient> MapEmployeesToClients { get; set; }
     }
 }
