@@ -32,7 +32,7 @@
                 {
                     <tr>
                         <td>@srNo</td>
-                        <td>@item.ClientName</td>
+                        <td><a href="#">@item.ClientName</a></td>
                         <td>@Model.Regions.FirstOrDefault(x => x.Id == item.RegionId).Name</td>
                         <td>@Model.BranchLocations.FirstOrDefault(x => x.Id == item.BranchLocationId).Name</td>
                         <td>@Model.IndustryTypes.FirstOrDefault(x => x.Id == item.IndustryTypeId).Name</td>
@@ -53,8 +53,8 @@
                         <td>
                             @Html.ActionLink("Role & Responsibility", "RoleAndResponsibility", "Clients", new { id = item.Id }, new { @class = "btn btn-link" }) |
                             @Html.ActionLink("Contacts", "Edit", "Clients", new { id = item.Id }, new { @class = "btn btn-link" }) |
-                            @Html.ActionLink("Relations", "Edit", "Clients", new { id = item.Id }, new { @class = "btn btn-link" }) |
-                            @Html.ActionLink("Add Employee", "AddEmployees", "Clients", new { id = item.Id }, new { @class = "btn btn-link" })
+                            @Html.ActionLink("Relations", "Edit", "Clients", new { id = item.Id }, new { @class = "btn btn-link" }) @*|
+                            @Html.ActionLink("Add Employee", "AddEmployees", "Clients", new { id = item.Id }, new { @class = "btn btn-link" })*@
                         </td>
                         <td>
                             @Html.ActionLink("Edit", "Edit", "Clients", new { id = item.Id }, new { @class = "btn btn-link" }) |
