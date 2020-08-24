@@ -72,5 +72,29 @@ namespace MIDAMS.Areas.Admin.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public ActionResult ViewEmployees(int id)
+        {
+            var viewModel = new MapEmployeeViewModel()
+            {
+                MapEmployeesToClients = _context.MapEmployeesToClients.Where(c => c.ClientId == id).ToList(),
+                ClientName = _context.Clients.FirstOrDefault(c => c.Id == id).ClientName,
+                Employees = _context.Employees.ToList()
+            };
+
+            return View("ViewEmployees", viewModel);
+        }
+                
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UnMapEmployee(int id, int client_id)
+        {
+            //var mapEmployee = _context.MapEmployeesToClients.Find(id);
+
+            //_context.MapEmployeesToClients.Remove(mapEmployee);
+            //_context.SaveChanges();
+
+            return RedirectToAction("ViewEmployees", new { id = client_id });
+        }
     }
 }
