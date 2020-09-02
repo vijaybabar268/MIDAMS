@@ -6,10 +6,9 @@
     <title>@ViewBag.Title - MIDAMS</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    @*<div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -26,16 +25,58 @@
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
-    </div>
-    <div class="container body-content">
+    </div>*@
+    @*<div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
             <p class="text-center">&copy; @DateTime.Now.Year - MIDAMS</p>
         </footer>
+    </div>*@
+
+    <div class="main_container">
+
+        <div class="header">
+            <div class="logo">
+                <a href="/Home/Index"><i><img src="~/Content/images/logo.png"></i></a>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li><a href="javascript:void(0)">Home</a></li>
+                    <li><a href="javascript:void(0)">About Us</a></li>
+                    <li><a href="javascript:void(0)">Clients</a></li>
+                    <li><a href="javascript:void(0)">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="banner_img">
+            <div class="banner_content">
+                <div class="banner_content1 banner_slide"><img src="~/Content/images/banner1.jpg" /></div>
+                <div class="banner_content2 banner_slide"><img src="~/Content/images/banner2.jpg" /></div>
+            </div>
+        </div>
+
+        @RenderBody()
+
+        <div class="footer">
+            <h1>copyright &copy; 2020</h1>
+        </div>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.banner_content').bxSlider();
+            $('.our_clients_content').bxSlider();
+            $(".about_info_right_content").height(Number($(".about_info_left_content").height() + 2))
+        });
+    </script>
+
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>

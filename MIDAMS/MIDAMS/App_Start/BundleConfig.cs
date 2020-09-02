@@ -19,20 +19,32 @@ namespace MIDAMS
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                "~/Scripts/datatables/jquery.datatables.js",
-                "~/Scripts/datatables/datatables.bootstrap.js",
-                "~/Scripts/bootstrap.js"));
+            //bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+            //    "~/Scripts/datatables/jquery.datatables.js",
+            //    "~/Scripts/datatables/datatables.bootstrap.js",
+            //    "~/Scripts/bootstrap.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+            //bundles.Add(new StyleBundle("~/Content/css").Include(
+            //          "~/Content/bootstrap.css",
+            //          "~/Content/site.css"));
 
             /* Admin */
             bundles.Add(new StyleBundle("~/Admin/Content/css").Include(
                 "~/Content/bootstrap.css",
                 "~/Content/datatables/css/datatables.bootstrap.css",
                 "~/Areas/Admin/Content/css/AdminSite.css"));
+
+            /*Website*/
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                      "~/Content/bootstrap.css",
+                      "~/Content/css/style1.css",
+                      "~/Content/css/jquery.bxslider.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                "~/Scripts/datatables/jquery.datatables.js",
+                "~/Scripts/datatables/datatables.bootstrap.js",
+                "~/Scripts/bootstrap.js",
+                "~/Content/js/common.js"));
         }
     }
 }

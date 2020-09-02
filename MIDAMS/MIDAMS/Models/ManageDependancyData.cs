@@ -2,7 +2,7 @@
 using System.Linq;
 
 namespace MIDAMS.Models
-{
+{    
     public static class ManageDependancyData
     {
         public class Dropdown
