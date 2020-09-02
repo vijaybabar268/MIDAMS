@@ -40,6 +40,9 @@ namespace MIDAMS
                       "~/Content/css/style1.css",
                       "~/Content/css/jquery.bxslider.css"));
 
+            bundles.Add(new StyleBundle("~/Content/css2").Include(
+                      "~/Content/bootstrap.css"));
+
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                 "~/Scripts/datatables/jquery.datatables.js",
                 "~/Scripts/datatables/datatables.bootstrap.js",
