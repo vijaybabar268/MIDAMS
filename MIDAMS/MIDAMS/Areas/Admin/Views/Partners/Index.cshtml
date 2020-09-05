@@ -1,28 +1,28 @@
 ﻿@model IEnumerable<MIDAMS.Models.User>
 
 @{
-    ViewBag.Title = "Manage Admins";
+    ViewBag.Title = "Manage Partners";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     int srNo = 1;
 }
 
 <h2 class="adminTitle">@ViewBag.Title</h2>
 
-@Html.ActionLink("New", "New", "Admins", null, new { @class = "btn btn-primary commonNewAddBtn" })
+@Html.ActionLink("New", "New", "Partners", null, new { @class = "btn btn-primary commonNewAddBtn" })
 
 <div class="tableDiv">
     <table id="adminTbl" class="table table-bordered table-hover table-responsive table-striped">
         <thead>
             <tr>
-                @*<th>Sr</th>*@
+                <th>Sr</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Status</th>
-                <th width="16%">Action</th>
+                <th width="13%">Action</th>
             </tr>
         </thead>
         <tbody>
-            @*@{
+            @{
                     foreach (var item in Model)
                     {
                         <tr>
@@ -42,10 +42,10 @@
                                 }
                             </td>
                             <td>
-                                @Html.ActionLink("Edit", "Edit", "Admins", new { id = item.Id }, new { @class = "btn btn-link" }) |
-                                @Html.ActionLink("Toggle Status", "ToggleStatus", "Admins", new { id = item.Id }, new { @class = "btn btn-link", onClick = "return confirm('Are you sure you want to perform this action?')" }) |
+                                @Html.ActionLink("Edit", "Edit", "Partners", new { id = item.Id }, new { @class = "btn btn-link" }) |
+                                @Html.ActionLink("Toggle Status", "ToggleStatus", "Partners", new { id = item.Id }, new { @class = "btn btn-link", onClick = "return confirm('Are you sure you want to perform this action?')" }) |
 
-                                @using (@Html.BeginForm("Delete", "Admins", FormMethod.Post, new { style= "display: inline;", onClick = "return confirm('Are you sure you want tp perform this action?')" }))
+                                @using (@Html.BeginForm("Delete", "Partners", FormMethod.Post, new { style= "display: inline;", onClick = "return confirm('Are you sure you want tp perform this action?')" }))
                                 {
                                     @Html.AntiForgeryToken()
                                     @Html.Hidden("id", item.Id)
@@ -55,7 +55,7 @@
                         </tr>
                         srNo++;
                     }
-                }*@
+                }
         </tbody>
     </table>
 </div>
@@ -63,7 +63,7 @@
 @section Scripts
 {
     <script>
-        $(document).ready(function () {
+        /*$(document).ready(function () {
             var table = $("#adminTbl").DataTable({
                 ajax: {
                     url: "/Api/Admin",
@@ -105,7 +105,7 @@
 
             $("#adminTbl").on("click", ".js-delete", function () {
                 var button = $(this);
-                if (confirm("Are you sure you want to perform these action?")) {                    
+                if (confirm("Are you sure you want to perform these action?")) {
                     $.ajax({
                         url: "/Api/Admin/" + button.attr("data-admin-id"),
                         method: "DELETE",
@@ -118,6 +118,6 @@
                 }
 
             });
-        });
+        });*/
     </script>
 }

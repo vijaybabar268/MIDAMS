@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MIDAMS.Areas.Admin.ViewModels
 {
-    public class AdminFormViewModel
+    public class PartnerFormViewModel
     {
         public int Id { get; set; }
 
@@ -36,9 +32,8 @@ namespace MIDAMS.Areas.Admin.ViewModels
         {
             get
             {
-                return Id == 0 ? "Create Admin" : "Edit Admin";
+                return Id == 0 ? "Create Partner" : "Edit Partner";
             }
         }
-
     }
 }

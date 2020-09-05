@@ -195,10 +195,13 @@
     <Compile Include="Areas\Admin\Controllers\ClientsController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\EmployeesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MapClientsController.cs" />
     <Compile Include="Areas\Admin\Controllers\MapEmployeesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PartnersController.cs" />
     <Compile Include="Areas\Admin\Repositories\AdminRepository.cs" />
     <Compile Include="Areas\Admin\Repositories\ClientRepository.cs" />
     <Compile Include="Areas\Admin\Repositories\EmployeeRepository.cs" />
+    <Compile Include="Areas\Admin\Repositories\PartnerRepositry.cs" />
     <Compile Include="Areas\Admin\ViewModels\AdminFormViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\ClientFormViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\ClientRoleResponsibilityFormViewModel.cs" />
@@ -207,6 +210,7 @@
     <Compile Include="Areas\Admin\ViewModels\EmployeeViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\MapEmployeeFormViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\MapEmployeeViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\PartnerFormViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\RoleResponsibilityViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -221,6 +225,7 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\ManageDependancyData.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Partner.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -431,6 +436,8 @@
     <Content Include="Areas\Admin\Views\MapEmployees\Index.cshtml" />
     <Content Include="Areas\Admin\Views\MapEmployees\MapEmployeeForm.cshtml" />
     <Content Include="Areas\Admin\Views\MapEmployees\ViewEmployees.cshtml" />
+    <Content Include="Areas\Admin\Views\Partners\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Partners\PartnerForm.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
@@ -557,6 +564,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Content\js\" />
+    <Folder Include="Areas\Admin\Views\MapClients\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
