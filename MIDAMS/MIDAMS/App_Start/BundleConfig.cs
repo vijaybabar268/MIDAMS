@@ -30,24 +30,24 @@ namespace MIDAMS
 
             /* Admin */
             bundles.Add(new StyleBundle("~/Admin/Content/css").Include(
-                "~/Content/bootstrap.css",
-                "~/Content/datatables/css/datatables.bootstrap.css",
+                "~/Assets/bootstrap.css",
+                "~/Assets/datatables/css/datatables.bootstrap.css",
                 "~/Areas/Admin/Content/css/AdminSite.css"));
 
             /*Website*/
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/css/style1.css",
-                      "~/Content/css/jquery.bxslider.css"));
+                      "~/Assets/bootstrap.css",
+                      "~/Assets/css/style1.css",
+                      "~/Assets/css/jquery.bxslider.css"));
 
             bundles.Add(new StyleBundle("~/Content/css2").Include(
-                      "~/Content/bootstrap.css"));
+                      "~/Assets/bootstrap.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                 "~/Scripts/datatables/jquery.datatables.js",
                 "~/Scripts/datatables/datatables.bootstrap.js",
                 "~/Scripts/bootstrap.js",
-                "~/Content/js/common.js"));
+                "~/Assets/js/common.js"));
         }
     }
 }

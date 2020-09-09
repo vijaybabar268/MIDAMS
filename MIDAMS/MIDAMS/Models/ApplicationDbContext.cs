@@ -36,7 +36,8 @@ namespace MIDAMS.Models
         // Ajit will add Vendor module
 
         public DbSet<MapEmployeesToClient> MapEmployeesToClients { get; set; }
+        public DbSet<MapClientsToPartner> MapClientsToPartners { get; set; }
 
-        
+
     }
 }

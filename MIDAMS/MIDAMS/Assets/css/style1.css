@@ -14,7 +14,7 @@ body {
     color: #000;
     padding-bottom: 0px;
     position: relative;
-    background: url(../images/body_bg.png) repeat;
+    background: url(../Assets/images/body_bg.png) repeat;
     top: 0 !important;
     font-family: 'Roboto', sans-serif;
     min-height: 750px !important;
@@ -89,7 +89,7 @@ img {
     padding:12px;
     box-shadow: 0 0 12px;
     /*background:#ff471a;*/
-    background: url(../images/bg_img.jpg) repeat-x;
+    background: url(../Assets/images/bg_img.jpg) repeat-x;
 }
 
 .banner_img {    
@@ -128,12 +128,12 @@ img {
     padding-left:10%;
 }
 
-.about_info .about_info_left_content{
-    float:left;
-    width:50%;
-    padding:10px;
-    background: url(../images/body_bg.png) repeat;
-}
+    .about_info .about_info_left_content {
+        float: left;
+        width: 50%;
+        padding: 10px;
+        background: url(../Assets/images/body_bg.png) repeat;
+    }
 .about_info .about_info_right_content{
     float:left;
     width:50%;
@@ -178,8 +178,7 @@ img {
 }
 
 .about_info_right_content {
-    background: url(../images/banner_bg.png) repeat-x;
-    
+    background: url(../Assets/images/banner_bg.png) repeat-x;
 }
 
 .about_info_inner_block h6 span{

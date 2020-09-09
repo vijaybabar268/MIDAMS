@@ -5,11 +5,15 @@
     Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
 
-<h2 class="text-center" style="margin-top:100px;">@ViewBag.Title</h2>
+<div class="text-center" style="margin-top:100px;">
+    <a href="/Home/Index"><i><img src="~/Assets/images/logo.png"></i></a>
+</div>
+
+<h2 class="text-center" style="margin-top:25px;">@ViewBag.Title</h2>
 
 <div class="row">
     <div class="col-md-12">
-        <section id="loginForm" style="background: #fff; text-align: center;padding: 30px 60px;margin: 65px auto;
+        <section id="loginForm" style="background: #fff; text-align: center;padding: 30px 60px;margin: 25px auto;
     width: 50%;">
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
@@ -19,14 +23,13 @@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
                     <div class="col-md-12">
-                        <input type="text" name="Email" value="admin@gmail.com" class = "form-control text-center"/>
-                        @*@Html.TextBoxFor(m => m.Email, new { @class = "form-control text-center", placeholder = "Enter your email" })*@                        
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control text-center", placeholder = "Enter Email." })         
                         @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">                    
                     <div class="col-md-12">                        
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control text-center", value = "Pass123!@#" })
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control text-center", placeholder = "Enter Password." })
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                     </div>
                 </div>                
