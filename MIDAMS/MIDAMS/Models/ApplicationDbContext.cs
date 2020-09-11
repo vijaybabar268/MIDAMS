@@ -38,6 +38,8 @@ namespace MIDAMS.Models
         public DbSet<MapEmployeesToClient> MapEmployeesToClients { get; set; }
         public DbSet<MapClientsToPartner> MapClientsToPartners { get; set; }
 
+        public DbSet<Partner> Partners { get; set; }
+
 
     }
 }

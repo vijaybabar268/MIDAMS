@@ -1,0 +1,168 @@
+﻿@model MIDAMS.Areas.Admin.ViewModels.PartnerFormViewModel2
+
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="main-block">
+    @using (Html.BeginForm("Save2", "Partners", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+    {
+        <div class="info">
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.UserId)
+            @Html.AntiForgeryToken()
+            <hr />
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FirstName, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MiddleName, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.LastName, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MotherName, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.MotherName, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EducationQualificationId, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(m => m.EducationQualificationId, new SelectList(Model.EducationQualifications, "Id", "Name"), "--Select--", new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DesignationId, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(m => m.DesignationId, new SelectList(Model.Designations, "Id", "Name"), "--Select--", new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MaritalStatusId, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(m => m.MaritalStatusId, new SelectList(Model.MaritalStatus, "Id", "Name"), "--Select--", new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.GenderId, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(m => m.GenderId, new SelectList(Model.Genders, "Id", "Name"), "--Select--", new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmailId, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MobileNumber, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.MobileNumber, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.TelNumber, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.TelNumber, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.IndetificationMarkOnBody, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.IndetificationMarkOnBody, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DateOfBirth, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.DateOfBirth, "{0:dd MMM yyyy}", new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DateOfJoining, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.DateOfJoining, "{0:dd MMM yyyy}", new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.PresentAddress, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextAreaFor(m => m.PresentAddress, new { @class = "form-control", rows = "4" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.PermanentAddress, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextAreaFor(m => m.PermanentAddress, new { @class = "form-control", rows = "4" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Remark, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextAreaFor(m => m.Remark, new { @class = "form-control", rows = "4" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-12 text-center">
+                    <input type="submit" class="btn btn-primary" value="Save" />
+                </div>
+            </div>
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+        </div>
+    }
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

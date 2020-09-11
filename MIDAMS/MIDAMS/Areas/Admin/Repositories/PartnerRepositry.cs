@@ -25,9 +25,20 @@ namespace MIDAMS.Areas.Admin.Repositories
             return _context.Users.FirstOrDefault(p => p.Id == id);
         }
 
+        public User GetPartnerByEmail(string email)
+        {
+            return _context.Users.FirstOrDefault(p => p.Email.ToLower().Trim() == email);
+        }
+
         public void AddPartner(User partner)
         {
             _context.Users.Add(partner);
+            _context.SaveChanges();
+        }
+
+        public void AddPartner2(Partner partner2)
+        {
+            _context.Partners.Add(partner2);
             _context.SaveChanges();
         }
 

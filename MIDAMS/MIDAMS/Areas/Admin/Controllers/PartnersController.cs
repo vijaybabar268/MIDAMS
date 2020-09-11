@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using static MIDAMS.Areas.Admin.ViewModels.PartnerFormViewModel;
 
 namespace MIDAMS.Areas.Admin.Controllers
 {
@@ -58,6 +59,11 @@ namespace MIDAMS.Areas.Admin.Controllers
                 };
 
                 _repo.AddPartner(partner);
+
+                // Newly insert record id.
+                var id = _repo.GetPartnerByEmail(viewModel.Email.ToLower().Trim()).Id;
+
+                return RedirectToAction("Save2", new { TempId = id });
             }
             else
             {
@@ -74,6 +80,87 @@ namespace MIDAMS.Areas.Admin.Controllers
                 partnerInDb.Password = viewModel.Password;
 
                 _repo.UpdatePartner(partnerInDb);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Save2(string TempId)
+        {
+            var viewModel = new PartnerFormViewModel2()
+            {
+                Id = 0,
+                EducationQualifications = ManageDependancyData.GetEducationQualification(),
+                Designations = ManageDependancyData.GetDesignations(),
+                MaritalStatus = ManageDependancyData.GetMaritalStatus(),
+                Genders = ManageDependancyData.GetGenders(),
+                UserId = int.Parse(TempId)
+            };
+
+            return View("PartnerForm2", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Save2(PartnerFormViewModel2 viewModel)
+        {
+            if (viewModel.Id == 0)
+            {
+                var partner = new Partner
+                {
+                    FirstName = viewModel.FirstName,
+                    MiddleName = viewModel.MiddleName,
+                    LastName = viewModel.LastName,
+                    MotherName = viewModel.MotherName,
+                    EducationQualificationId = viewModel.EducationQualificationId,
+                    DesignationId = viewModel.DesignationId,
+                    MaritalStatusId = viewModel.MaritalStatusId,
+                    GenderId = viewModel.GenderId,
+                    EmailId = viewModel.EmailId,
+                    DateOfBirth = (DateTime)viewModel.DateOfBirth,
+                    DateOfJoining = (DateTime)viewModel.DateOfJoining,
+                    PresentAddress = viewModel.PresentAddress,
+                    PermanentAddress = viewModel.PermanentAddress,
+                    MobileNumber = viewModel.MobileNumber,
+                    TelNumber = viewModel.TelNumber,
+                    IndetificationMarkOnBody = viewModel.IndetificationMarkOnBody,                    
+                    Remarks = viewModel.Remark,
+                    UserId = viewModel.UserId
+                };
+
+                _repo.AddPartner2(partner);
+            }
+            else
+            {
+                /*var employeeInDb = _repo.GetEmployee(viewModel.Id);
+
+                if (employeeInDb == null)
+                {
+                    ModelState.AddModelError("", "Something went wrong.");
+                    return View("EmployeeForm", viewModel);
+                }
+
+                employeeInDb.FirstName = viewModel.FirstName;
+                employeeInDb.MiddleName = viewModel.MiddleName;
+                employeeInDb.LastName = viewModel.LastName;
+                employeeInDb.MotherName = viewModel.MotherName;
+                employeeInDb.EducationQualificationId = viewModel.EducationQualificationId;
+                employeeInDb.DesignationId = viewModel.DesignationId;
+                employeeInDb.MaritalStatusId = viewModel.MaritalStatusId;
+                employeeInDb.GenderId = viewModel.GenderId;
+                employeeInDb.EmailId = viewModel.EmailId;
+                employeeInDb.DateOfBirth = (DateTime)viewModel.DateOfBirth;
+                employeeInDb.DateOfJoining = (DateTime)viewModel.DateOfJoining;
+                employeeInDb.PresentAddress = viewModel.PresentAddress;
+                employeeInDb.PermanentAddress = viewModel.PermanentAddress;
+                employeeInDb.MobileNumber = viewModel.MobileNumber;
+                employeeInDb.TelNumber = viewModel.TelNumber;
+                employeeInDb.IndetificationMarkOnBody = viewModel.IndetificationMarkOnBody;
+                employeeInDb.NameAndContactReference1 = viewModel.NameAndContactReference1;
+                employeeInDb.NameAndContactReference2 = viewModel.NameAndContactReference2;
+                employeeInDb.Photo = viewModel.Photo;
+
+                _repo.UpdateEmployee(employeeInDb);*/
             }
 
             return RedirectToAction("Index");
