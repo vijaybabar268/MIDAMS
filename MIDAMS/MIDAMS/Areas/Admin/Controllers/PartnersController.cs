@@ -219,5 +219,45 @@ namespace MIDAMS.Areas.Admin.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public ActionResult Details(int id)
+        {
+            User partnerinDb = _repo.GetPartner(id);
+            Partner partnerinDb2  = _repo.GetPartner2(id);
+
+            PartnerDetailsViewModel partnerDetailsViewModel = new PartnerDetailsViewModel()
+            {
+                UserName = partnerinDb.UserName,
+                Email = partnerinDb.Email,
+                Password = partnerinDb.Password,
+
+                EducationQualifications = ManageDependancyData.GetEducationQualification(),
+                Designations = ManageDependancyData.GetDesignations(),
+                MaritalStatus = ManageDependancyData.GetMaritalStatus(),
+                Genders = ManageDependancyData.GetGenders(),
+
+                FirstName = partnerinDb2.FirstName,
+                MiddleName = partnerinDb2.MiddleName,
+                LastName = partnerinDb2.LastName,
+                MotherName = partnerinDb2.MotherName,
+                EducationQualificationId = partnerinDb2.EducationQualificationId,
+                DesignationId = partnerinDb2.DesignationId,
+                MaritalStatusId = partnerinDb2.MaritalStatusId,
+                GenderId = partnerinDb2.GenderId,
+                EmailId = partnerinDb2.EmailId,
+                DateOfBirth = (DateTime)partnerinDb2.DateOfBirth,
+                DateOfJoining = (DateTime)partnerinDb2.DateOfJoining,
+                PresentAddress = partnerinDb2.PresentAddress,
+                PermanentAddress = partnerinDb2.PermanentAddress,
+                MobileNumber = partnerinDb2.MobileNumber,
+                TelNumber = partnerinDb2.TelNumber,
+                IndetificationMarkOnBody = partnerinDb2.IndetificationMarkOnBody,
+                Remark = partnerinDb2.Remarks,                
+                IsActive = true,
+                CreatedOn = DateTime.Now
+            };
+
+            return View("Details", partnerDetailsViewModel);
+        }
     }
 }
