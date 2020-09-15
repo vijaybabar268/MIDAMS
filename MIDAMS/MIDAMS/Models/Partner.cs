@@ -62,6 +62,12 @@ namespace MIDAMS.Models
 
         [Column("user_id")]
         public int UserId { get; set; }
+
+        [Column("is_active")]
+        public bool IsActive { get; set; }
+
+        [Column("created_on")]
+        public DateTime CreatedOn { get; set; }
     }
 
     [Table("tbl_partner_document_details")]

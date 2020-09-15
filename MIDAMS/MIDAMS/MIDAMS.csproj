@@ -213,6 +213,7 @@
     <Compile Include="Areas\Admin\ViewModels\MapEmployeeFormViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\MapEmployeeViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\PartnerFormViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\PartnerViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\RoleResponsibilityViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

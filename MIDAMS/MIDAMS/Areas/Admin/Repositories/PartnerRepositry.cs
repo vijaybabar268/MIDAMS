@@ -20,9 +20,19 @@ namespace MIDAMS.Areas.Admin.Repositories
             return _context.Users.ToList();
         }
 
+        public IEnumerable<Partner> GetPartners2()
+        {
+            return _context.Partners.ToList();
+        }
+
         public User GetPartner(int id)
         {
             return _context.Users.FirstOrDefault(p => p.Id == id);
+        }
+
+        public Partner GetPartner2(int id)
+        {
+            return _context.Partners.FirstOrDefault(p => p.UserId == id);
         }
 
         public User GetPartnerByEmail(string email)
@@ -48,9 +58,21 @@ namespace MIDAMS.Areas.Admin.Repositories
             _context.SaveChanges();
         }
 
+        public void UpdatePartner2(Partner partner)
+        {
+            _context.Entry(partner).State = System.Data.Entity.EntityState.Modified;
+            _context.SaveChanges();
+        }
+
         public void RemovePartner(User partner)
         {
             _context.Users.Remove(partner);
+            _context.SaveChanges();
+        }
+
+        public void RemovePartner2(Partner partner)
+        {
+            _context.Partners.Remove(partner);
             _context.SaveChanges();
         }
     }

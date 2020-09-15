@@ -2,11 +2,8 @@
 using MIDAMS.Areas.Admin.ViewModels;
 using MIDAMS.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using static MIDAMS.Areas.Admin.ViewModels.PartnerFormViewModel;
 
 namespace MIDAMS.Areas.Admin.Controllers
 {
@@ -21,18 +18,31 @@ namespace MIDAMS.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
-            var partners = _repo.GetPartners()
-                            .Where(r => r.RoleId == 3)
+            var partners = _repo.GetPartners2()                            
                             .ToList();
 
-            return View(partners);
+            var viewModel = new PartnerViewModel
+            {
+                Partners = partners,
+                EducationQualifications = ManageDependancyData.GetEducationQualification(),
+                Designations = ManageDependancyData.GetDesignations(),
+                MaritalStatus = ManageDependancyData.GetMaritalStatus(),
+                Genders = ManageDependancyData.GetGenders(),
+            };
+
+            return View(viewModel);
         }
 
         public ActionResult New()
         {
             var viewModel = new PartnerFormViewModel()
             {
-
+                Id = 0,
+                EducationQualifications = ManageDependancyData.GetEducationQualification(),
+                Designations = ManageDependancyData.GetDesignations(),
+                MaritalStatus = ManageDependancyData.GetMaritalStatus(),
+                Genders = ManageDependancyData.GetGenders(),
+                UserId = 0
             };
 
             return View("PartnerForm", viewModel);
@@ -63,11 +73,37 @@ namespace MIDAMS.Areas.Admin.Controllers
                 // Newly insert record id.
                 var id = _repo.GetPartnerByEmail(viewModel.Email.ToLower().Trim()).Id;
 
-                return RedirectToAction("Save2", new { TempId = id });
+                // Insert partner more information
+                var partnerinfo = new Partner
+                {
+                    FirstName = viewModel.FirstName,
+                    MiddleName = viewModel.MiddleName,
+                    LastName = viewModel.LastName,
+                    MotherName = viewModel.MotherName,
+                    EducationQualificationId = viewModel.EducationQualificationId,
+                    DesignationId = viewModel.DesignationId,
+                    MaritalStatusId = viewModel.MaritalStatusId,
+                    GenderId = viewModel.GenderId,
+                    EmailId = viewModel.Email,
+                    DateOfBirth = (DateTime)viewModel.DateOfBirth,
+                    DateOfJoining = (DateTime)viewModel.DateOfJoining,
+                    PresentAddress = viewModel.PresentAddress,
+                    PermanentAddress = viewModel.PermanentAddress,
+                    MobileNumber = viewModel.MobileNumber,
+                    TelNumber = viewModel.TelNumber,
+                    IndetificationMarkOnBody = viewModel.IndetificationMarkOnBody,
+                    Remarks = viewModel.Remark,
+                    UserId = id,
+                    IsActive = true,
+                    CreatedOn = DateTime.Now
+                };
+
+                _repo.AddPartner2(partnerinfo);
             }
             else
             {
                 var partnerInDb = _repo.GetPartner(viewModel.Id);
+                var partnerInDb2 = _repo.GetPartner2(viewModel.Id);
 
                 if (partnerInDb == null)
                 {
@@ -79,88 +115,26 @@ namespace MIDAMS.Areas.Admin.Controllers
                 partnerInDb.Email = viewModel.Email;
                 partnerInDb.Password = viewModel.Password;
 
+                partnerInDb2.FirstName = viewModel.FirstName;
+                partnerInDb2.MiddleName = viewModel.MiddleName;
+                partnerInDb2.LastName = viewModel.LastName;
+                partnerInDb2.MotherName = viewModel.MotherName;
+                partnerInDb2.EducationQualificationId = viewModel.EducationQualificationId;
+                partnerInDb2.DesignationId = viewModel.DesignationId;
+                partnerInDb2.MaritalStatusId = viewModel.MaritalStatusId;
+                partnerInDb2.GenderId = viewModel.GenderId;
+                partnerInDb2.EmailId = viewModel.EmailId;
+                partnerInDb2.DateOfBirth = (DateTime)viewModel.DateOfBirth;
+                partnerInDb2.DateOfJoining = (DateTime)viewModel.DateOfJoining;
+                partnerInDb2.PresentAddress = viewModel.PresentAddress;
+                partnerInDb2.PermanentAddress = viewModel.PermanentAddress;
+                partnerInDb2.MobileNumber = viewModel.MobileNumber;
+                partnerInDb2.TelNumber = viewModel.TelNumber;
+                partnerInDb2.IndetificationMarkOnBody = viewModel.IndetificationMarkOnBody;
+                partnerInDb2.Remarks = viewModel.Remark;
+
                 _repo.UpdatePartner(partnerInDb);
-            }
-
-            return RedirectToAction("Index");
-        }
-
-        public ActionResult Save2(string TempId)
-        {
-            var viewModel = new PartnerFormViewModel2()
-            {
-                Id = 0,
-                EducationQualifications = ManageDependancyData.GetEducationQualification(),
-                Designations = ManageDependancyData.GetDesignations(),
-                MaritalStatus = ManageDependancyData.GetMaritalStatus(),
-                Genders = ManageDependancyData.GetGenders(),
-                UserId = int.Parse(TempId)
-            };
-
-            return View("PartnerForm2", viewModel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Save2(PartnerFormViewModel2 viewModel)
-        {
-            if (viewModel.Id == 0)
-            {
-                var partner = new Partner
-                {
-                    FirstName = viewModel.FirstName,
-                    MiddleName = viewModel.MiddleName,
-                    LastName = viewModel.LastName,
-                    MotherName = viewModel.MotherName,
-                    EducationQualificationId = viewModel.EducationQualificationId,
-                    DesignationId = viewModel.DesignationId,
-                    MaritalStatusId = viewModel.MaritalStatusId,
-                    GenderId = viewModel.GenderId,
-                    EmailId = viewModel.EmailId,
-                    DateOfBirth = (DateTime)viewModel.DateOfBirth,
-                    DateOfJoining = (DateTime)viewModel.DateOfJoining,
-                    PresentAddress = viewModel.PresentAddress,
-                    PermanentAddress = viewModel.PermanentAddress,
-                    MobileNumber = viewModel.MobileNumber,
-                    TelNumber = viewModel.TelNumber,
-                    IndetificationMarkOnBody = viewModel.IndetificationMarkOnBody,                    
-                    Remarks = viewModel.Remark,
-                    UserId = viewModel.UserId
-                };
-
-                _repo.AddPartner2(partner);
-            }
-            else
-            {
-                /*var employeeInDb = _repo.GetEmployee(viewModel.Id);
-
-                if (employeeInDb == null)
-                {
-                    ModelState.AddModelError("", "Something went wrong.");
-                    return View("EmployeeForm", viewModel);
-                }
-
-                employeeInDb.FirstName = viewModel.FirstName;
-                employeeInDb.MiddleName = viewModel.MiddleName;
-                employeeInDb.LastName = viewModel.LastName;
-                employeeInDb.MotherName = viewModel.MotherName;
-                employeeInDb.EducationQualificationId = viewModel.EducationQualificationId;
-                employeeInDb.DesignationId = viewModel.DesignationId;
-                employeeInDb.MaritalStatusId = viewModel.MaritalStatusId;
-                employeeInDb.GenderId = viewModel.GenderId;
-                employeeInDb.EmailId = viewModel.EmailId;
-                employeeInDb.DateOfBirth = (DateTime)viewModel.DateOfBirth;
-                employeeInDb.DateOfJoining = (DateTime)viewModel.DateOfJoining;
-                employeeInDb.PresentAddress = viewModel.PresentAddress;
-                employeeInDb.PermanentAddress = viewModel.PermanentAddress;
-                employeeInDb.MobileNumber = viewModel.MobileNumber;
-                employeeInDb.TelNumber = viewModel.TelNumber;
-                employeeInDb.IndetificationMarkOnBody = viewModel.IndetificationMarkOnBody;
-                employeeInDb.NameAndContactReference1 = viewModel.NameAndContactReference1;
-                employeeInDb.NameAndContactReference2 = viewModel.NameAndContactReference2;
-                employeeInDb.Photo = viewModel.Photo;
-
-                _repo.UpdateEmployee(employeeInDb);*/
+                _repo.UpdatePartner2(partnerInDb2);
             }
 
             return RedirectToAction("Index");
@@ -169,12 +143,37 @@ namespace MIDAMS.Areas.Admin.Controllers
         public ActionResult Edit(int id)
         {
             var partnerInDb = _repo.GetPartner(id);
+            var partnerInDb2 = _repo.GetPartner2(id);
 
             var viewModel = new PartnerFormViewModel()
             {
                 Id = partnerInDb.Id,
+                EducationQualifications = ManageDependancyData.GetEducationQualification(),
+                Designations = ManageDependancyData.GetDesignations(),
+                MaritalStatus = ManageDependancyData.GetMaritalStatus(),
+                Genders = ManageDependancyData.GetGenders(),
                 UserName = partnerInDb.UserName,
-                Email = partnerInDb.Email
+                Email = partnerInDb.Email,
+                Password = partnerInDb.Password,
+                UserId = partnerInDb2.UserId,
+                PartnerId = partnerInDb2.Id,
+                FirstName = partnerInDb2.FirstName,
+                MiddleName = partnerInDb2.MiddleName,
+                LastName = partnerInDb2.LastName,
+                MotherName = partnerInDb2.MotherName,
+                EducationQualificationId = partnerInDb2.EducationQualificationId,
+                DesignationId = partnerInDb2.DesignationId,
+                MaritalStatusId = partnerInDb2.MaritalStatusId,
+                GenderId = partnerInDb2.GenderId,
+                EmailId = partnerInDb2.EmailId,
+                DateOfBirth = (DateTime)partnerInDb2.DateOfBirth,
+                DateOfJoining = (DateTime)partnerInDb2.DateOfJoining,
+                PresentAddress = partnerInDb2.PresentAddress,
+                PermanentAddress = partnerInDb2.PermanentAddress,
+                MobileNumber = partnerInDb2.MobileNumber,
+                TelNumber = partnerInDb2.TelNumber,
+                IndetificationMarkOnBody = partnerInDb2.IndetificationMarkOnBody,
+                Remark = partnerInDb2.Remarks
             };
 
             if (partnerInDb == null)
@@ -190,6 +189,7 @@ namespace MIDAMS.Areas.Admin.Controllers
         public ActionResult ToggleStatus(int id)
         {
             var partnerInDb = _repo.GetPartner(id);
+            var partnerInDb2 = _repo.GetPartner2(id);
 
             if (partnerInDb.IsActive)
                 partnerInDb.IsActive = false;
@@ -198,6 +198,14 @@ namespace MIDAMS.Areas.Admin.Controllers
 
             _repo.UpdatePartner(partnerInDb);
 
+
+            if (partnerInDb2.IsActive)
+                partnerInDb2.IsActive = false;
+            else
+                partnerInDb2.IsActive = true;
+
+            _repo.UpdatePartner2(partnerInDb2);
+
             return RedirectToAction("Index");
         }
 
@@ -205,6 +213,8 @@ namespace MIDAMS.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
+            _repo.RemovePartner2(_repo.GetPartner2(id));
+
             _repo.RemovePartner(_repo.GetPartner(id));
 
             return RedirectToAction("Index");

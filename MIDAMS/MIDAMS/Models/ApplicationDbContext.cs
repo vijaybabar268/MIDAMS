@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Configuration;
+using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MySql.Data.Entity;
 
@@ -7,6 +8,8 @@ namespace MIDAMS.Models
     [DbConfigurationType(typeof(MySqlEFConfiguration))]
     public class ApplicationDbContext : DbContext
     {
+        //string isProduction = ConfigurationManager.AppSettings["IsProduction"];                
+
         public ApplicationDbContext()
             : base("MySql_CS")
         {

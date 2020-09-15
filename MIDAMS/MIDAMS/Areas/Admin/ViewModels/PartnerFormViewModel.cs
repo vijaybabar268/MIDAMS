@@ -5,10 +5,10 @@ using static MIDAMS.Models.ManageDependancyData;
 
 namespace MIDAMS.Areas.Admin.ViewModels
 {
+
     public class PartnerFormViewModel
     {
-        public int Id { get; set; }
-
+        /*Login Info*/
         [Required]
         [StringLength(100)]
         [Display(Name = "Name")]
@@ -31,17 +31,17 @@ namespace MIDAMS.Areas.Admin.ViewModels
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        public string Title
-        {
-            get
-            {
-                return Id == 0 ? "Create Partner" : "Edit Partner";
-            }
-        }       
-    }
+        //public string Title
+        //{
+        //    get
+        //    {
+        //        return Id == 0 ? "Create Partner" : "Edit Partner";
+        //    }
+        //}
 
-    public class PartnerFormViewModel2
-    {
+        /*Partner Info*/
+        public int PartnerId { get; set; }
+
         public int Id { get; set; }
 
         [Required]

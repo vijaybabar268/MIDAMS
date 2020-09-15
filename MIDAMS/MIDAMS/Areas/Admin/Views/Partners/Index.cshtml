@@ -1,14 +1,14 @@
-﻿@model IEnumerable<MIDAMS.Models.User>
+﻿@model MIDAMS.Areas.Admin.ViewModels.PartnerViewModel
 
 @{
-    ViewBag.Title = "Manage Partners";
+    ViewBag.Title = Model.Title;
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     int srNo = 1;
 }
 
 <h2 class="adminTitle">@ViewBag.Title</h2>
 
-@Html.ActionLink("New", "New", "Partners", null, new { @class = "btn btn-primary commonNewAddBtn" })
+@Html.ActionLink("Add Partner", "New", "Partners", null, new { @class = "btn btn-primary commonNewAddBtn" })
 
 <div class="tableDiv">
     <table id="adminTbl" class="table table-bordered table-hover table-responsive table-striped">
@@ -16,46 +16,67 @@
             <tr>
                 <th>Sr</th>
                 <th>Name</th>
+                <th>Mobile No</th>
                 <th>Email</th>
+                <th>DOB</th>
+                <th>DOJ</th>
+                <th>Gender</th>
+                <th>Education</th>
+                <th>Designation</th>
+                <th>Marital Status</th>
                 <th>Status</th>
+                <th width="13%">Manage</th>
                 <th width="13%">Action</th>
             </tr>
         </thead>
         <tbody>
             @{
-                    foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>@srNo</td>
-                            <td>@item.UserName</td>
-                            <td>@item.Email</td>
-                            <td>
-                                @{
-                                    if (item.IsActive)
-                                    {
-                                        <span class="badge badge-success">Active</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="badge badge-warning">In-Active</span>
-                                    }
-                                }
-                            </td>
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", "Partners", new { id = item.Id }, new { @class = "btn btn-link" }) |
-                                @Html.ActionLink("Toggle Status", "ToggleStatus", "Partners", new { id = item.Id }, new { @class = "btn btn-link", onClick = "return confirm('Are you sure you want to perform this action?')" }) |
-
-                                @using (@Html.BeginForm("Delete", "Partners", FormMethod.Post, new { style= "display: inline;", onClick = "return confirm('Are you sure you want tp perform this action?')" }))
+                foreach (var item in Model.Partners)
+                {
+                    <tr>
+                        <td>@srNo</td>
+                        <td><a href="#">@string.Format("{0} {1} {2}", item.FirstName, item.MiddleName, item.LastName)</a></td>
+                        <td>@item.MobileNumber</td>
+                        <td>@item.EmailId</td>
+                        <td>@string.Format("{0:dd-MM-yyyy}", item.DateOfBirth)</td>
+                        <td>@string.Format("{0:dd-MM-yyyy}", item.DateOfJoining)</td>
+                        <td>@Model.Genders.FirstOrDefault(x => x.Id == item.GenderId).Name</td>
+                        <td>@Model.EducationQualifications.FirstOrDefault(x => x.Id == item.EducationQualificationId).Name</td>
+                        <td>@Model.Designations.FirstOrDefault(x => x.Id == item.DesignationId).Name</td>
+                        <td>@Model.MaritalStatus.FirstOrDefault(x => x.Id == item.MaritalStatusId).Name</td>
+                        <td>
+                            @{
+                                if (item.IsActive)
                                 {
-                                    @Html.AntiForgeryToken()
-                                    @Html.Hidden("id", item.Id)
-                                    <button type="submit" class="btn btn-link">Delete</button>
+                                    <span class="badge badge-success">Active</span>
                                 }
-                            </td>
-                        </tr>
-                        srNo++;
-                    }
+                                else
+                                {
+                                    <span class="badge badge-warning">In-Active</span>
+                                }
+                            }
+                        </td>
+                        <td>
+                            @Html.ActionLink("Document Details", "EmployeeDocumentDetails", "Employees", new { id = item.Id }, new { @class = "btn btn-link" }) |
+                            @Html.ActionLink("Bank Details", "EmployeeBankDetails", "Employees", new { id = item.Id }, new { @class = "btn btn-link" }) |
+                            @Html.ActionLink("Responsible Site", "EmployeePFDetails", "Employees", new { id = item.Id }, new { @class = "btn btn-link" }) |
+                            @Html.ActionLink("Tearms & Conditions", "EmployeeStateInsuranceDetails", "Employees", new { id = item.Id }, new { @class = "btn btn-link" })
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", "Partners", new { id = item.UserId }, new { @class = "btn btn-link" }) |
+                            @Html.ActionLink("Toggle Status", "ToggleStatus", "Partners", new { id = item.UserId }, new { @class = "btn btn-link", onClick = "return confirm('Are you sure you want to perform this action?')" }) |
+
+                            @using (@Html.BeginForm("Delete", "Partners", FormMethod.Post, new { style = "display: inline;", onClick = "return confirm('Are you sure you want tp perform this action?')" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("id", item.UserId)
+                                <button type="submit" class="btn btn-link">Delete</button>
+                            }
+                        </td>
+                    </tr>
+                    srNo++;
                 }
+            }
         </tbody>
     </table>
 </div>
