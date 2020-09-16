@@ -160,7 +160,7 @@ namespace MIDAMS.Models
         public int PartnerId { get; set; }
     }
 
-    [Table("tbl_partner_tearms_Condition")]
+    [Table("tbl_partner_tearms_condition")]
     public class PartnerTearmsCondition
     {
         [Column("id")]
