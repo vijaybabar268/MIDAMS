@@ -144,7 +144,33 @@ namespace MIDAMS.Areas.Admin.Repositories
         }
 
         // Partner Responsible Site
+        public IEnumerable<PartnerResponsibleSite> GetResponsibleSites()
+        {
+            return _context.PartnerResponsibleSites.ToList();
+        }
 
+        public PartnerResponsibleSite GetResponsibleSite(int id)
+        {
+            return _context.PartnerResponsibleSites.FirstOrDefault(c => c.Id == id);
+        }
+
+        public void AddResponsibleSite(PartnerResponsibleSite responsibleSite)
+        {
+            _context.PartnerResponsibleSites.Add(responsibleSite);
+            _context.SaveChanges();
+        }
+
+        public void UpdateResponsibleSite(PartnerResponsibleSite responsibleSite)
+        {
+            _context.Entry(responsibleSite).State = System.Data.Entity.EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        public void RemoveResponsibleSite(PartnerResponsibleSite responsibleSite)
+        {
+            _context.PartnerResponsibleSites.Remove(responsibleSite);
+            _context.SaveChanges();
+        }
         #endregion
     }
 }

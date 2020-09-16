@@ -1,0 +1,85 @@
+﻿@model MIDAMS.Areas.Admin.ViewModels.ResponsibleSiteFormViewModel
+
+@{
+    ViewBag.Title = "Responsible Site Form";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="main-block">
+    @using (Html.BeginForm("SaveResponsibleSite", "Partners", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        <div class="info">
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.PartnerId)
+            @Html.AntiForgeryToken()
+            <hr />
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.NameOfTheSite, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.NameOfTheSite, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Location, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.Location, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SiteCode, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.SiteCode, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.StartDateOfSite, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.StartDateOfSite, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ManagementFeesPercentAmount, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.ManagementFeesPercentAmount, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.TotalBillingValueOfSite, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.TotalBillingValueOfSite, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-12 text-center">
+                    <input type="submit" class="btn btn-primary" value="Save" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

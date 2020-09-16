@@ -59,8 +59,8 @@
                         <td>
                             @Html.ActionLink("Document Details", "DocumentDetail", "Partners", new { id = item.Id }, new { @class = "btn btn-link" }) |
                             @Html.ActionLink("Bank Details", "BankDetail", "Partners", new { id = item.Id }, new { @class = "btn btn-link" }) |
-                            @Html.ActionLink("Responsible Site", "EmployeePFDetails", "Employees", new { id = item.Id }, new { @class = "btn btn-link" }) |
-                            @Html.ActionLink("Tearms & Conditions", "EmployeeStateInsuranceDetails", "Employees", new { id = item.Id }, new { @class = "btn btn-link" })
+                            @Html.ActionLink("Responsible Site", "ResponsibleSite", "Partners", new { id = item.Id }, new { @class = "btn btn-link" }) |
+                            @Html.ActionLink("Tearms & Conditions", "StateInsuranceDetail", "Partners", new { id = item.Id }, new { @class = "btn btn-link" })
                         </td>
                         <td>
                             @Html.ActionLink("Edit", "Edit", "Partners", new { id = item.UserId }, new { @class = "btn btn-link" }) |

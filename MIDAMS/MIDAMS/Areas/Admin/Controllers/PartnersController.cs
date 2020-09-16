@@ -526,7 +526,132 @@ namespace MIDAMS.Areas.Admin.Controllers
         }
 
         // Partner Responsible Site
-        
+        public ActionResult ResponsibleSite(int id)
+        {
+            var responsibleSites = _repo.GetResponsibleSites().Where(c => c.PartnerId == id).ToList();
+            var PartnerInfo = _repo.GetPartner3(id);
 
+            var viewModel = new ResponsibleSiteViewModel()
+            {
+                PartnerResponsibleSites = responsibleSites,
+                PartnerId = PartnerInfo.Id,
+                PartnerName = string.Format("{0} {1} {2}", PartnerInfo.FirstName, PartnerInfo.MiddleName, PartnerInfo.LastName),
+            };
+
+            return View("ResponsibleSite", viewModel);
+        }
+
+        public ActionResult AddResponsibleSite(int partnerId)
+        {
+            var viewModel = new ResponsibleSiteFormViewModel()
+            {
+                Id = 0,
+                PartnerId = partnerId
+            };
+
+            return View("ResponsibleSiteForm", viewModel);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SaveResponsibleSite(ResponsibleSiteFormViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("ResponsibleSiteForm", viewModel);
+            }
+
+            if (viewModel.Id == 0)
+            {
+                var partnerResponsibleSite = new PartnerResponsibleSite
+                {
+                    NameOfTheSite = viewModel.NameOfTheSite,
+                    Location = viewModel.Location,
+                    SiteCode = viewModel.SiteCode,
+                    StartDateOfSite = viewModel.StartDateOfSite,
+                    ManagementFeesPercentAmount = viewModel.ManagementFeesPercentAmount,
+                    TotalBillingValueOfSite = viewModel.TotalBillingValueOfSite,
+                    PartnerId = viewModel.PartnerId
+                };
+
+                _repo.AddResponsibleSite(partnerResponsibleSite);
+            }
+            else
+            {
+                var partnerResponsibleSiteInDb = _repo.GetResponsibleSite(viewModel.Id);
+
+                if (partnerResponsibleSiteInDb == null)
+                {
+                    ModelState.AddModelError("", "Something went wrong.");
+                    return View("ResponsibleSiteForm", viewModel);
+                }
+
+                partnerResponsibleSiteInDb.NameOfTheSite = viewModel.NameOfTheSite;
+                partnerResponsibleSiteInDb.Location = viewModel.Location;
+                partnerResponsibleSiteInDb.SiteCode = viewModel.SiteCode;
+                partnerResponsibleSiteInDb.StartDateOfSite = viewModel.StartDateOfSite;
+                partnerResponsibleSiteInDb.ManagementFeesPercentAmount = viewModel.ManagementFeesPercentAmount;
+                partnerResponsibleSiteInDb.TotalBillingValueOfSite = viewModel.TotalBillingValueOfSite;
+                partnerResponsibleSiteInDb.PartnerId = viewModel.PartnerId;
+
+                _repo.UpdateResponsibleSite(partnerResponsibleSiteInDb);
+            }
+
+            return RedirectToAction("ResponsibleSite", "Partners", new { id = viewModel.PartnerId });
+        }
+
+        public ActionResult EditResponsibleSite(int id)
+        {
+            var responsibleSiteInDb = _repo.GetResponsibleSite(id);
+
+            var viewModel = new ResponsibleSiteFormViewModel()
+            {
+                NameOfTheSite = responsibleSiteInDb.NameOfTheSite,
+                Location = responsibleSiteInDb.Location,
+                SiteCode = responsibleSiteInDb.SiteCode,
+                StartDateOfSite = responsibleSiteInDb.StartDateOfSite,
+                ManagementFeesPercentAmount = responsibleSiteInDb.ManagementFeesPercentAmount,
+                TotalBillingValueOfSite = responsibleSiteInDb.TotalBillingValueOfSite,
+                PartnerId = responsibleSiteInDb.PartnerId
+            };
+
+            if (responsibleSiteInDb == null)
+            {
+                ModelState.AddModelError("", "Something went wrong.");
+                return View("ResponsibleSiteForm", viewModel);
+            }
+
+            return View("ResponsibleSiteForm", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteResponsibleSite(int ResponsibleSiteId, int PartnerId)
+        {
+            var responsibleSiteInDb = _repo.GetResponsibleSite(ResponsibleSiteId);
+
+            _repo.RemoveResponsibleSite(responsibleSiteInDb);
+
+            return RedirectToAction("ResponsibleSite", "Partners", new { id = PartnerId });
+        }
+
+        public ActionResult ViewResponsibleSite(int id)
+        {
+            var responsibleSiteInDb = _repo.GetResponsibleSite(id);
+
+            var viewModel = new ViewResponsibleSiteViewModel()
+            {
+                NameOfTheSite = responsibleSiteInDb.NameOfTheSite,
+                Location = responsibleSiteInDb.Location,
+                SiteCode = responsibleSiteInDb.SiteCode,
+                StartDateOfSite = responsibleSiteInDb.StartDateOfSite,
+                ManagementFeesPercentAmount = responsibleSiteInDb.ManagementFeesPercentAmount,
+                TotalBillingValueOfSite = responsibleSiteInDb.TotalBillingValueOfSite,
+                PartnerId = responsibleSiteInDb.PartnerId
+            };
+
+            return View("ViewResponsibleSite", viewModel);
+        }
     }
 }

@@ -138,13 +138,25 @@ namespace MIDAMS.Models
         [Column("id")]
         public int Id { get; set; }
 
+        [Column("name_of_the_site")]
         public string NameOfTheSite { get; set; }
-        public string Location { get; set; }
-        public string SiteCode { get; set; }
-        public string StartDateOfSite	 { get; set; }
-        public string ManagementFeesPercentAmount { get; set; }
-        public string TotalBillingValueOfSite { get; set; }
 
+        [Column("location")]
+        public string Location { get; set; }
+
+        [Column("site_code")]
+        public string SiteCode { get; set; }
+
+        [Column("start_date_of_site")]
+        public DateTime StartDateOfSite { get; set; }
+
+        [Column("management_fees_percent_amount")]
+        public decimal ManagementFeesPercentAmount { get; set; }
+
+        [Column("total_billing_value_of_site")]
+        public decimal TotalBillingValueOfSite { get; set; }
+
+        [Column("partner_id")]
         public int PartnerId { get; set; }
     }
 

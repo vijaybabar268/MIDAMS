@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using static MIDAMS.Models.ManageDependancyData;
 
 namespace MIDAMS.Areas.Admin.ViewModels
@@ -375,4 +376,60 @@ namespace MIDAMS.Areas.Admin.ViewModels
     }
 
     // Partner Responsible Site
+    public class ResponsibleSiteViewModel
+    {
+        public IEnumerable<PartnerResponsibleSite> PartnerResponsibleSites { get; set; }
+
+        public int PartnerId { get; set; }
+
+        public string PartnerName { get; set; }
+    }
+
+    public class ResponsibleSiteFormViewModel
+    {
+        public int Id { get; set; }
+
+        [Display(Name ="Name Of The Site")]
+        public string NameOfTheSite { get; set; }
+
+        [Display(Name ="Location")]
+        public string Location { get; set; }
+
+        [Display(Name ="Site Code")]
+        public string SiteCode { get; set; }
+
+        [Display(Name ="Start Date Of Site")]
+        public DateTime StartDateOfSite { get; set; }
+
+        [Display(Name ="Management Fees Percent Amount")]
+        public decimal ManagementFeesPercentAmount { get; set; }
+
+        [Column("Total Billing Value Of Site")]
+        public decimal TotalBillingValueOfSite { get; set; }
+
+        public int PartnerId { get; set; }
+    }
+
+    public class ViewResponsibleSiteViewModel
+    {
+        [Display(Name = "Name Of The Site :-")]
+        public string NameOfTheSite { get; set; }
+
+        [Display(Name = "Location :-")]
+        public string Location { get; set; }
+
+        [Display(Name = "Site Code :-")]
+        public string SiteCode { get; set; }
+
+        [Display(Name = "Start Date Of Site :-")]
+        public DateTime StartDateOfSite { get; set; }
+
+        [Display(Name = "Management Fees Percent Amount :-")]
+        public decimal ManagementFeesPercentAmount { get; set; }
+
+        [Column("Total Billing Value Of Site :-")]
+        public decimal TotalBillingValueOfSite { get; set; }
+
+        public int PartnerId { get; set; }
+    }
 }
