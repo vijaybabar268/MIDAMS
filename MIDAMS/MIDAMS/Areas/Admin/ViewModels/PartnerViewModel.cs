@@ -289,33 +289,90 @@ namespace MIDAMS.Areas.Admin.ViewModels
 
     public class ViewDocumentDetailViewModel
     {
-        [Display(Name = "Adhar No")]
+        [Display(Name = "Adhar No :-")]
         public string AdharNo { get; set; }
 
-        [Display(Name = "Adhar Name")]
+        [Display(Name = "Adhar Name :-")]
         public string AdharName { get; set; }
 
-        [Display(Name = "Adhar Birthdate")]
+        [Display(Name = "Adhar Birthdate :-")]
         public DateTime AdharDateOfBirth { get; set; }
 
-        [Display(Name = "Adhar Address")]
+        [Display(Name = "Adhar Address :-")]
         public string AdharAddress { get; set; }
 
-        [Display(Name = "Pan No")]
+        [Display(Name = "Pan No :-")]
         public string PanNo { get; set; }
 
-        [Display(Name = "Pan Name")]
+        [Display(Name = "Pan Name :-")]
         public string PanName { get; set; }
 
-        [Display(Name = "Pan Father Name")]
+        [Display(Name = "Pan Father Name :-")]
         public string PanFatherName { get; set; }
 
-        [Display(Name = "Pan Birthdate")]
+        [Display(Name = "Pan Birthdate :-")]
         public DateTime PanDateOfBirth { get; set; }
 
         public int PartnerId { get; set; }
     }
 
     // Partner Bank Details
+    public class BankDetailsViewModel
+    {
+        public IEnumerable<PartnerBankDetail> PartnerBankDetails { get; set; }
 
+        public int PartnerId { get; set; }
+
+        public string PartnerName { get; set; }
+    }
+
+    public class BankDetailsFormViewModel
+    {
+        public int Id { get; set; }
+
+        [Display(Name ="Account No")]
+        public string AccountNo { get; set; }
+
+        [Display(Name = "Bank Name")]
+        public string BankName { get; set; }
+
+        [Display(Name = "IFSC Code")]
+        public string IFSCCode { get; set; }
+
+        [Display(Name = "Branch Name")]
+        public string BranchName { get; set; }
+
+        [Display(Name = "Name Of Account Holder 1")]
+        public string NameOfAccountHolder1 { get; set; }
+
+        [Display(Name = "Name Of Account Holder 2")]
+        public string NameOfAccountHolder2 { get; set; }
+
+        public int PartnerId { get; set; }
+    }
+
+    public class ViewBankDetailsViewModel
+    {
+        [Display(Name = "Account No :-")]
+        public string AccountNo { get; set; }
+
+        [Display(Name = "Bank Name :-")]
+        public string BankName { get; set; }
+
+        [Display(Name = "IFSC Code :-")]
+        public string IFSCCode { get; set; }
+
+        [Display(Name = "Branch Name :-")]
+        public string BranchName { get; set; }
+
+        [Display(Name = "Name Of Account Holder 1 :-")]
+        public string NameOfAccountHolder1 { get; set; }
+
+        [Display(Name = "Name Of Account Holder 2 :-")]
+        public string NameOfAccountHolder2 { get; set; }
+
+        public int PartnerId { get; set; }
+    }
+
+    // Partner Responsible Site
 }

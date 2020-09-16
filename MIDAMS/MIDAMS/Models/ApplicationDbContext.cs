@@ -43,6 +43,7 @@ namespace MIDAMS.Models
 
         public DbSet<Partner> Partners { get; set; }
         public DbSet<PartnerDocumentDetail> PartnerDocumentDetails { get; set; }
+        public DbSet<PartnerBankDetail> PartnerBankDetails { get; set; }
 
     }
 }

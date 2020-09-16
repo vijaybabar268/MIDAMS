@@ -111,5 +111,40 @@ namespace MIDAMS.Areas.Admin.Repositories
             _context.SaveChanges();
         }
         #endregion
+
+
+        // Partner Bank Details
+        #region
+        public IEnumerable<PartnerBankDetail> GetBankDetails()
+        {
+            return _context.PartnerBankDetails.ToList();
+        }
+
+        public PartnerBankDetail GetBankDetail(int id)
+        {
+            return _context.PartnerBankDetails.FirstOrDefault(c => c.Id == id);
+        }
+
+        public void AddBankDetail(PartnerBankDetail bankDetail)
+        {
+            _context.PartnerBankDetails.Add(bankDetail);
+            _context.SaveChanges();
+        }
+
+        public void UpdateBankDetail(PartnerBankDetail bankDetail)
+        {
+            _context.Entry(bankDetail).State = System.Data.Entity.EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        public void RemoveBankDetail(PartnerBankDetail bankDetail)
+        {
+            _context.PartnerBankDetails.Remove(bankDetail);
+            _context.SaveChanges();
+        }
+
+        // Partner Responsible Site
+
+        #endregion
     }
 }

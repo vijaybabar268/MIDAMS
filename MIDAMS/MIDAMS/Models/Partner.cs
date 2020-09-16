@@ -105,18 +105,30 @@ namespace MIDAMS.Models
     }
 
     [Table("tbl_partner_bank_details")]
-    public class PartnerBankDetails
+    public class PartnerBankDetail
     {
         [Column("id")]
         public int Id { get; set; }
 
+        [Column("account_no")]
         public string AccountNo { get; set; }
+
+        [Column("bank_name")]
         public string BankName { get; set; }
+
+        [Column("ifsc_code")]
         public string IFSCCode { get; set; }
+
+        [Column("branch_code")]
         public string BranchName { get; set; }
+
+        [Column("account_holder_name_1")]
         public string NameOfAccountHolder1 { get; set; }
+
+        [Column("account_holder_name_2")]
         public string NameOfAccountHolder2 { get; set; }
 
+        [Column("partner_id")]
         public int PartnerId { get; set; }
     }
 

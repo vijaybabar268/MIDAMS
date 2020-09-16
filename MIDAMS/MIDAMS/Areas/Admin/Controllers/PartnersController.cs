@@ -18,7 +18,7 @@ namespace MIDAMS.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
-            var partners = _repo.GetPartners2()                            
+            var partners = _repo.GetPartners2()
                             .ToList();
 
             var viewModel = new PartnerViewModel
@@ -223,7 +223,7 @@ namespace MIDAMS.Areas.Admin.Controllers
         public ActionResult Details(int id)
         {
             User partnerinDb = _repo.GetPartner(id);
-            Partner partnerinDb2  = _repo.GetPartner2(id);
+            Partner partnerinDb2 = _repo.GetPartner2(id);
 
             PartnerDetailsViewModel partnerDetailsViewModel = new PartnerDetailsViewModel()
             {
@@ -252,7 +252,7 @@ namespace MIDAMS.Areas.Admin.Controllers
                 MobileNumber = partnerinDb2.MobileNumber,
                 TelNumber = partnerinDb2.TelNumber,
                 IndetificationMarkOnBody = partnerinDb2.IndetificationMarkOnBody,
-                Remark = partnerinDb2.Remarks,                
+                Remark = partnerinDb2.Remarks,
                 IsActive = true,
                 CreatedOn = DateTime.Now
             };
@@ -281,7 +281,7 @@ namespace MIDAMS.Areas.Admin.Controllers
         {
             var viewModel = new DocumentDetailFormViewModel()
             {
-                Id = 0,                
+                Id = 0,
                 PartnerId = partnerId
             };
 
@@ -393,11 +393,140 @@ namespace MIDAMS.Areas.Admin.Controllers
                 PanDateOfBirth = documentDetailsInDb.PanDateOfBirth,
                 PartnerId = documentDetailsInDb.PartnerId
             };
-                        
+
             return View("viewDocumentDetail", viewModel);
         }
 
         // Partner Bank Details
+        public ActionResult BankDetail(int id)
+        {
+            var bankDetails = _repo.GetBankDetails().Where(c => c.PartnerId == id).ToList();
+            var PartnerInfo = _repo.GetPartner3(id);
+
+            var viewModel = new BankDetailsViewModel()
+            {
+                PartnerBankDetails = bankDetails,
+                PartnerId = PartnerInfo.Id,
+                PartnerName = string.Format("{0} {1} {2}", PartnerInfo.FirstName, PartnerInfo.MiddleName, PartnerInfo.LastName),
+            };
+
+            return View("BankDetail", viewModel);
+        }
+
+        public ActionResult AddBankDetail(int partnerId)
+        {
+            var viewModel = new BankDetailsFormViewModel()
+            {
+                Id = 0,
+                PartnerId = partnerId
+            };
+
+            return View("BankDetailForm", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SaveBankDetail(BankDetailsFormViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("BankDetailForm", viewModel);
+            }
+
+            if (viewModel.Id == 0)
+            {
+                var bankDetail = new PartnerBankDetail
+                {
+                    AccountNo = viewModel.AccountNo,
+                    BankName = viewModel.BankName,
+                    IFSCCode = viewModel.IFSCCode,
+                    BranchName = viewModel.BranchName,
+                    NameOfAccountHolder1 = viewModel.NameOfAccountHolder1,
+                    NameOfAccountHolder2 = viewModel.NameOfAccountHolder2,
+                    PartnerId = viewModel.PartnerId
+                };
+
+                _repo.AddBankDetail(bankDetail);
+            }
+            else
+            {
+                var bankDetailInDb = _repo.GetBankDetail(viewModel.Id);
+
+                if (bankDetailInDb == null)
+                {
+                    ModelState.AddModelError("", "Something went wrong.");
+                    return View("BankDetailForm", viewModel);
+                }
+
+                bankDetailInDb.AccountNo = viewModel.AccountNo;
+                bankDetailInDb.BankName = viewModel.BankName;
+                bankDetailInDb.IFSCCode = viewModel.IFSCCode;
+                bankDetailInDb.BranchName = viewModel.BranchName;
+                bankDetailInDb.NameOfAccountHolder1 = viewModel.NameOfAccountHolder1;
+                bankDetailInDb.NameOfAccountHolder2 = viewModel.NameOfAccountHolder2;
+                bankDetailInDb.PartnerId = viewModel.PartnerId;
+
+                _repo.UpdateBankDetail(bankDetailInDb);
+            }
+
+            return RedirectToAction("BankDetail", "Partners", new { id = viewModel.PartnerId });
+        }
+
+        public ActionResult EditBankDetail(int id)
+        {
+            var bankDetailsInDb = _repo.GetBankDetail(id);
+
+            var viewModel = new BankDetailsFormViewModel()
+            {
+                AccountNo = bankDetailsInDb.AccountNo,
+                BankName = bankDetailsInDb.BankName,
+                IFSCCode = bankDetailsInDb.IFSCCode,
+                BranchName = bankDetailsInDb.BranchName,
+                NameOfAccountHolder1 = bankDetailsInDb.NameOfAccountHolder1,
+                NameOfAccountHolder2 = bankDetailsInDb.NameOfAccountHolder2,
+                PartnerId = bankDetailsInDb.PartnerId
+            };
+
+            if (bankDetailsInDb == null)
+            {
+                ModelState.AddModelError("", "Something went wrong.");
+                return View("BankDetailForm", viewModel);
+            }
+
+            return View("BankDetailForm", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteBankDetail(int BankDetailId, int PartnerId)
+        {
+            var bankDetail = _repo.GetBankDetail(BankDetailId);
+
+            _repo.RemoveBankDetail(bankDetail);
+
+            return RedirectToAction("BankDetail", "Partners", new { id = PartnerId });
+        }
+
+        public ActionResult ViewbankDetail(int id)
+        {
+            var bankDetailsInDb = _repo.GetBankDetail(id);
+
+            var viewModel = new ViewBankDetailsViewModel()
+            {
+                AccountNo = bankDetailsInDb.AccountNo,
+                BankName = bankDetailsInDb.BankName,
+                IFSCCode = bankDetailsInDb.IFSCCode,
+                BranchName = bankDetailsInDb.BranchName,
+                NameOfAccountHolder1 = bankDetailsInDb.NameOfAccountHolder1,
+                NameOfAccountHolder2 = bankDetailsInDb.NameOfAccountHolder2,
+                PartnerId = bankDetailsInDb.PartnerId
+            };
+
+            return View("ViewBankDetail", viewModel);
+        }
+
+        // Partner Responsible Site
+        
 
     }
 }
