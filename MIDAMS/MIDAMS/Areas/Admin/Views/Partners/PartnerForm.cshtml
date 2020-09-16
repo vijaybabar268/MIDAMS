@@ -19,14 +19,14 @@
         @Html.AntiForgeryToken()
         <hr />
 
-        <div class="col-md-6">
+        @*<div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(m => m.UserName, new { @class = "col-sm-4 col-form-label" })
                 <div class="col-md-8">
                     @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
                 </div>
             </div>
-        </div>
+        </div>*@
         <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(m => m.Email, new { @class = "col-sm-4 col-form-label" })
@@ -44,15 +44,15 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="form-group">
-                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-sm-4 col-form-label" })
+                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-sm-2 col-form-label" })
                 <div class="col-md-8">
                     @Html.Password("ConfirmPassword", @Model.Password, new { @class = "form-control" })
                 </div>
             </div>
         </div>
-
+        
         <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(m => m.FirstName, new { @class = "col-sm-4 col-form-label" })
@@ -117,14 +117,14 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        @*<div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(m => m.EmailId, new { @class = "col-sm-4 col-form-label" })
                 <div class="col-md-8">
                     @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control" })
                 </div>
             </div>
-        </div>
+        </div>*@
         <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(m => m.MobileNumber, new { @class = "col-sm-4 col-form-label" })

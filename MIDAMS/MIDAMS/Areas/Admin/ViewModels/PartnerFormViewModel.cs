@@ -9,7 +9,7 @@ namespace MIDAMS.Areas.Admin.ViewModels
     public class PartnerFormViewModel
     {
         /*Login Info*/
-        [Required]
+        //[Required]
         [StringLength(100)]
         [Display(Name = "Name")]
         public string UserName { get; set; }
@@ -84,7 +84,7 @@ namespace MIDAMS.Areas.Admin.ViewModels
         [Display(Name = "Select Gender")]
         public int GenderId { get; set; }
 
-        [Required]
+        //[Required]
         [Display(Name = "Email")]
         public string EmailId { get; set; }
 
