@@ -71,21 +71,36 @@ namespace MIDAMS.Models
     }
 
     [Table("tbl_partner_document_details")]
-    public class PartnerDocumentDetails
+    public class PartnerDocumentDetail
     {
         [Column("id")]
         public int Id { get; set; }
 
+        [Column("adhar_no")]
         public string AdharNo { get; set; }
+
+        [Column("adhar_name")]
         public string AdharName { get; set; }
+
+        [Column("adhar_date_of_birth")]
         public DateTime AdharDateOfBirth { get; set; }
+
+        [Column("adhar_address")]
         public string AdharAddress { get; set; }
 
+        [Column("pan_no")]
         public string PanNo { get; set; }
+
+        [Column("pan_name")]
         public string PanName { get; set; }
+
+        [Column("pan_father_name")]
         public string PanFatherName { get; set; }
+
+        [Column("pan_date_of_birth")]
         public DateTime PanDateOfBirth { get; set; }
 
+        [Column("partner_id")]
         public int PartnerId { get; set; }
     }
 

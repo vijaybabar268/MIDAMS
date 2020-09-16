@@ -42,7 +42,7 @@ namespace MIDAMS.Models
         public DbSet<MapClientsToPartner> MapClientsToPartners { get; set; }
 
         public DbSet<Partner> Partners { get; set; }
-
+        public DbSet<PartnerDocumentDetail> PartnerDocumentDetails { get; set; }
 
     }
 }

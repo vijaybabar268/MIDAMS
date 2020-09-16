@@ -259,5 +259,145 @@ namespace MIDAMS.Areas.Admin.Controllers
 
             return View("Details", partnerDetailsViewModel);
         }
+
+
+        // Partner Document Details
+        public ActionResult DocumentDetail(int id)
+        {
+            var DocumentDetails = _repo.GetDocumentDetails().Where(c => c.PartnerId == id).ToList();
+            var PartnerInfo = _repo.GetPartner3(id);
+
+            var viewModel = new DocumentDetailViewModel()
+            {
+                PartnerDocumentDetails = DocumentDetails,
+                PartnerId = PartnerInfo.Id,
+                PartnerName = string.Format("{0} {1} {2}", PartnerInfo.FirstName, PartnerInfo.MiddleName, PartnerInfo.LastName),
+            };
+
+            return View("DocumentDetail", viewModel);
+        }
+
+        public ActionResult AddDocumentDetail(int partnerId)
+        {
+            var viewModel = new DocumentDetailFormViewModel()
+            {
+                Id = 0,                
+                PartnerId = partnerId
+            };
+
+            return View("DocumentDetailForm", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SaveDocumentDetail(DocumentDetailFormViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("DocumentDetailForm", viewModel);
+            }
+
+            if (viewModel.Id == 0)
+            {
+                var documentDetail = new PartnerDocumentDetail
+                {
+                    AdharNo = viewModel.AdharNo,
+                    AdharName = viewModel.AdharName,
+                    AdharDateOfBirth = viewModel.AdharDateOfBirth,
+                    AdharAddress = viewModel.AdharAddress,
+                    PanNo = viewModel.PanNo,
+                    PanName = viewModel.PanName,
+                    PanFatherName = viewModel.PanFatherName,
+                    PanDateOfBirth = viewModel.PanDateOfBirth,
+                    PartnerId = viewModel.PartnerId
+                };
+
+                _repo.AddDocumentDetail(documentDetail);
+            }
+            else
+            {
+                var DocumentDetailInDb = _repo.GetDocumentDetail(viewModel.Id);
+
+                if (DocumentDetailInDb == null)
+                {
+                    ModelState.AddModelError("", "Something went wrong.");
+                    return View("DocumentDetailForm", viewModel);
+                }
+
+                DocumentDetailInDb.AdharNo = viewModel.AdharNo;
+                DocumentDetailInDb.AdharName = viewModel.AdharName;
+                DocumentDetailInDb.AdharDateOfBirth = viewModel.AdharDateOfBirth;
+                DocumentDetailInDb.AdharAddress = viewModel.AdharAddress;
+                DocumentDetailInDb.PanNo = viewModel.PanNo;
+                DocumentDetailInDb.PanName = viewModel.PanName;
+                DocumentDetailInDb.PanFatherName = viewModel.PanFatherName;
+                DocumentDetailInDb.PanDateOfBirth = viewModel.PanDateOfBirth;
+                DocumentDetailInDb.PartnerId = viewModel.PartnerId;
+
+                _repo.UpdateDocumentDetail(DocumentDetailInDb);
+            }
+
+            return RedirectToAction("DocumentDetail", "Partners", new { id = viewModel.PartnerId });
+        }
+
+        public ActionResult EditDocumentDetail(int id)
+        {
+            var documentDetailsInDb = _repo.GetDocumentDetail(id);
+
+            var viewModel = new DocumentDetailFormViewModel()
+            {
+                AdharNo = documentDetailsInDb.AdharNo,
+                AdharName = documentDetailsInDb.AdharName,
+                AdharDateOfBirth = documentDetailsInDb.AdharDateOfBirth,
+                AdharAddress = documentDetailsInDb.AdharAddress,
+                PanNo = documentDetailsInDb.PanNo,
+                PanName = documentDetailsInDb.PanName,
+                PanFatherName = documentDetailsInDb.PanFatherName,
+                PanDateOfBirth = documentDetailsInDb.PanDateOfBirth,
+                PartnerId = documentDetailsInDb.PartnerId
+            };
+
+            if (documentDetailsInDb == null)
+            {
+                ModelState.AddModelError("", "Something went wrong.");
+                return View("DocumentDetailForm", viewModel);
+            }
+
+            return View("DocumentDetailForm", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteDocumentDetail(int DocumentDetailId, int PartnerId)
+        {
+            var documentDetail = _repo.GetDocumentDetail(DocumentDetailId);
+
+            _repo.RemoveDocumentDetail(documentDetail);
+
+            return RedirectToAction("DocumentDetail", "Partners", new { id = PartnerId });
+        }
+
+        public ActionResult ViewDocumentDetail(int id)
+        {
+            var documentDetailsInDb = _repo.GetDocumentDetail(id);
+
+            var viewModel = new ViewDocumentDetailViewModel()
+            {
+                AdharNo = documentDetailsInDb.AdharNo,
+                AdharName = documentDetailsInDb.AdharName,
+                AdharDateOfBirth = documentDetailsInDb.AdharDateOfBirth,
+                AdharAddress = documentDetailsInDb.AdharAddress,
+                PanNo = documentDetailsInDb.PanNo,
+                PanName = documentDetailsInDb.PanName,
+                PanFatherName = documentDetailsInDb.PanFatherName,
+                PanDateOfBirth = documentDetailsInDb.PanDateOfBirth,
+                PartnerId = documentDetailsInDb.PartnerId
+            };
+                        
+            return View("viewDocumentDetail", viewModel);
+        }
+
+        // Partner Bank Details
+
     }
 }

@@ -19,4 +19,6 @@ namespace MIDAMS.Areas.Admin.ViewModels
 
         public string  ClientName { get; set; }
     }
+
+    
 }

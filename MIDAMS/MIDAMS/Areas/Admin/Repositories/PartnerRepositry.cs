@@ -35,6 +35,11 @@ namespace MIDAMS.Areas.Admin.Repositories
             return _context.Partners.FirstOrDefault(p => p.UserId == id);
         }
 
+        public Partner GetPartner3(int id)
+        {
+            return _context.Partners.FirstOrDefault(p => p.Id == id);
+        }
+
         public User GetPartnerByEmail(string email)
         {
             return _context.Users.FirstOrDefault(p => p.Email.ToLower().Trim() == email);
@@ -75,5 +80,36 @@ namespace MIDAMS.Areas.Admin.Repositories
             _context.Partners.Remove(partner);
             _context.SaveChanges();
         }
+
+        // Partner Document Details
+        #region
+        public IEnumerable<PartnerDocumentDetail> GetDocumentDetails()
+        {
+            return _context.PartnerDocumentDetails.ToList();
+        }
+
+        public PartnerDocumentDetail GetDocumentDetail(int id)
+        {
+            return _context.PartnerDocumentDetails.FirstOrDefault(c => c.Id == id);
+        }
+
+        public void AddDocumentDetail(PartnerDocumentDetail documentDetail)
+        {
+            _context.PartnerDocumentDetails.Add(documentDetail);
+            _context.SaveChanges();
+        }
+
+        public void UpdateDocumentDetail(PartnerDocumentDetail documentDetail)
+        {
+            _context.Entry(documentDetail).State = System.Data.Entity.EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        public void RemoveDocumentDetail(PartnerDocumentDetail documentDetail)
+        {
+            _context.PartnerDocumentDetails.Remove(documentDetail);
+            _context.SaveChanges();
+        }
+        #endregion
     }
 }

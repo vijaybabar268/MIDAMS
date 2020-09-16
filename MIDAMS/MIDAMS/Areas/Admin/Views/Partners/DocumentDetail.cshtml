@@ -1,0 +1,57 @@
+﻿@model MIDAMS.Areas.Admin.ViewModels.DocumentDetailViewModel
+
+@{
+    ViewBag.Title = "Manage Partner Document Details for " + Model.PartnerName + "";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    int srNo = 1;
+}
+
+<h2 class="adminTitle">@ViewBag.Title</h2>
+
+@Html.ActionLink("Add Document", "AddDocumentDetail", "Partners", new { PartnerId = Model.PartnerId }, new { @class = "btn btn-primary commonNewAddBtn" })
+
+<div class="tableDiv">
+    <table class="table table-bordered table-hover table-responsive table-striped">
+        <thead>
+            <tr>
+                <th>Sr</th>
+                <th>Adhar No</th>
+                <th>Adhar Name</th>
+                <th>Pan No</th>
+                <th>Pan Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model.PartnerDocumentDetails)
+                {
+                    <tr>
+                        <td>@srNo</td>
+                        <td>@item.AdharNo</td>
+                        <td>@item.AdharName</td>
+                        <td>@item.PanNo</td>
+                        <td>@item.PanName</td>
+                        <td>
+                            @Html.ActionLink("View", "ViewDocumentDetail", "Partners", new { id = item.Id }, new { @class = "btn btn-link" }) |
+                            @Html.ActionLink("Edit", "EditDocumentDetail", "Partners", new { id = item.Id }, new { @class = "btn btn-link" }) |
+                            @using (@Html.BeginForm("DeleteDocumentDetail", "Partners", FormMethod.Post, new { style = "display: inline;", onClick = "return confirm('Are you sure you want tp perform this action?')" }))
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <input type="hidden" name="DocumentDetailId" value="@item.Id" />
+                                <input type="hidden" name="PartnerId" value="@item.PartnerId" />
+
+                                <button type="submit" class="btn btn-link">Delete</button>
+                            }
+                        </td>
+                    </tr>
+                    srNo++;
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@Html.ActionLink("Back to Partners List", "Index", "Partners", null, new { @class = "btn btn-link" })
+
