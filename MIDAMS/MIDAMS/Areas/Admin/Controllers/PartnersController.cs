@@ -653,5 +653,134 @@ namespace MIDAMS.Areas.Admin.Controllers
 
             return View("ViewResponsibleSite", viewModel);
         }
+
+        // Partner Tearms and Conditions
+        public ActionResult TearmsCondition(int id)
+        {
+            var tearmsConditions = _repo.GetTearmsConditions().Where(c => c.PartnerId == id).ToList();
+            var PartnerInfo = _repo.GetPartner3(id);
+
+            var viewModel = new TearmsConditionViewModel()
+            {
+                PartnerTearmsConditions = tearmsConditions,
+                PartnerId = PartnerInfo.Id,
+                PartnerName = string.Format("{0} {1} {2}", PartnerInfo.FirstName, PartnerInfo.MiddleName, PartnerInfo.LastName),
+            };
+
+            return View("TearmsCondition", viewModel);
+        }
+
+        public ActionResult AddTearmsCondition(int partnerId)
+        {
+            var viewModel = new TearmsConditionFormViewModel()
+            {
+                Id = 0,
+                PartnerId = partnerId
+            };
+
+            return View("TearmsConditionForm", viewModel);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SaveTearmsCondition(TearmsConditionFormViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("TearmsConditionForm", viewModel);
+            }
+
+            if (viewModel.Id == 0)
+            {
+                var partnerTearmsCondition = new PartnerTearmsCondition
+                {
+                    ProfitLossSharingPercent = viewModel.ProfitLossSharingPercent,
+                    MonthlyIncentivesIfAny = viewModel.MonthlyIncentivesIfAny,
+                    YearlyIncentivesIfAny = viewModel.YearlyIncentivesIfAny,
+                    OtherPerksIfAny = viewModel.OtherPerksIfAny,
+                    NoticePeriod = viewModel.NoticePeriod,
+                    OtherTermsIfAny = viewModel.OtherTermsIfAny,
+                    PartnerId = viewModel.PartnerId
+                };
+
+                _repo.AddTearmsCondition(partnerTearmsCondition);
+            }
+            else
+            {
+                var partnerTearmsConditionInDb = _repo.GetTearmsCondition(viewModel.Id);
+
+                if (partnerTearmsConditionInDb == null)
+                {
+                    ModelState.AddModelError("", "Something went wrong.");
+                    return View("TearmsConditionForm", viewModel);
+                }
+
+                partnerTearmsConditionInDb.ProfitLossSharingPercent = viewModel.ProfitLossSharingPercent;
+                partnerTearmsConditionInDb.MonthlyIncentivesIfAny = viewModel.MonthlyIncentivesIfAny;
+                partnerTearmsConditionInDb.YearlyIncentivesIfAny = viewModel.YearlyIncentivesIfAny;
+                partnerTearmsConditionInDb.OtherPerksIfAny = viewModel.OtherPerksIfAny;
+                partnerTearmsConditionInDb.NoticePeriod = viewModel.NoticePeriod;
+                partnerTearmsConditionInDb.OtherTermsIfAny = viewModel.OtherTermsIfAny;
+                partnerTearmsConditionInDb.PartnerId = viewModel.PartnerId;
+
+                _repo.UpdateTearmsCondition(partnerTearmsConditionInDb);
+            }
+
+            return RedirectToAction("TearmsCondition", "Partners", new { id = viewModel.PartnerId });
+        }
+
+        public ActionResult EditTearmsCondition(int id)
+        {
+            var tearmsConditionInDb = _repo.GetTearmsCondition(id);
+
+            var viewModel = new TearmsConditionFormViewModel()
+            {
+                ProfitLossSharingPercent = tearmsConditionInDb.ProfitLossSharingPercent,
+                MonthlyIncentivesIfAny = tearmsConditionInDb.MonthlyIncentivesIfAny,
+                YearlyIncentivesIfAny = tearmsConditionInDb.YearlyIncentivesIfAny,
+                OtherPerksIfAny = tearmsConditionInDb.OtherPerksIfAny,
+                NoticePeriod = tearmsConditionInDb.NoticePeriod,
+                OtherTermsIfAny = tearmsConditionInDb.OtherTermsIfAny,
+                PartnerId = tearmsConditionInDb.PartnerId
+            };
+
+            if (tearmsConditionInDb == null)
+            {
+                ModelState.AddModelError("", "Something went wrong.");
+                return View("TearmsConditionForm", viewModel);
+            }
+
+            return View("TearmsConditionForm", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteTearmsCondition(int TearmsConditionId, int PartnerId)
+        {
+            var tearmsConditionInDb = _repo.GetTearmsCondition(TearmsConditionId);
+
+            _repo.RemoveTearmsCondition(tearmsConditionInDb);
+
+            return RedirectToAction("TearmsCondition", "Partners", new { id = PartnerId });
+        }
+
+        public ActionResult ViewTearmsCondition(int id)
+        {
+            var tearmsConditionInDb = _repo.GetTearmsCondition(id);
+
+            var viewModel = new ViewTearmsConditionViewModel()
+            {
+                ProfitLossSharingPercent = tearmsConditionInDb.ProfitLossSharingPercent,
+                MonthlyIncentivesIfAny = tearmsConditionInDb.MonthlyIncentivesIfAny,
+                YearlyIncentivesIfAny = tearmsConditionInDb.YearlyIncentivesIfAny,
+                OtherPerksIfAny = tearmsConditionInDb.OtherPerksIfAny,
+                NoticePeriod = tearmsConditionInDb.NoticePeriod,
+                OtherTermsIfAny = tearmsConditionInDb.OtherTermsIfAny,
+                PartnerId = tearmsConditionInDb.PartnerId
+            };
+
+            return View("ViewTearmsCondition", viewModel);
+        }
     }
 }

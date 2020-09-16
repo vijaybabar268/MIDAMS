@@ -112,7 +112,6 @@ namespace MIDAMS.Areas.Admin.Repositories
         }
         #endregion
 
-
         // Partner Bank Details
         #region
         public IEnumerable<PartnerBankDetail> GetBankDetails()
@@ -169,6 +168,35 @@ namespace MIDAMS.Areas.Admin.Repositories
         public void RemoveResponsibleSite(PartnerResponsibleSite responsibleSite)
         {
             _context.PartnerResponsibleSites.Remove(responsibleSite);
+            _context.SaveChanges();
+        }
+
+        // Partner Tearms and Conditions
+        public IEnumerable<PartnerTearmsCondition> GetTearmsConditions()
+        {
+            return _context.PartnerTearmsConditions.ToList();
+        }
+
+        public PartnerTearmsCondition GetTearmsCondition(int id)
+        {
+            return _context.PartnerTearmsConditions.FirstOrDefault(c => c.Id == id);
+        }
+
+        public void AddTearmsCondition(PartnerTearmsCondition partnerTearmsCondition)
+        {
+            _context.PartnerTearmsConditions.Add(partnerTearmsCondition);
+            _context.SaveChanges();
+        }
+
+        public void UpdateTearmsCondition(PartnerTearmsCondition partnerTearmsCondition)
+        {
+            _context.Entry(partnerTearmsCondition).State = System.Data.Entity.EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        public void RemoveTearmsCondition(PartnerTearmsCondition partnerTearmsCondition)
+        {
+            _context.PartnerTearmsConditions.Remove(partnerTearmsCondition);
             _context.SaveChanges();
         }
         #endregion

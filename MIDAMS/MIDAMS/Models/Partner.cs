@@ -166,13 +166,25 @@ namespace MIDAMS.Models
         [Column("id")]
         public int Id { get; set; }
 
-        public string ProfitLossSharingPercent { get; set; }
-        public string MonthlyIncentivesIfAny { get; set; }
-        public string YearlyIncentivesIfAny { get; set; }
-        public string OtherPerksIfAny { get; set; }
-        public string NoticePeriod { get; set; }
+        [Column("profit_loss_sharing_percent")]
+        public decimal ProfitLossSharingPercent { get; set; }
+
+        [Column("monthly_incentives")]
+        public decimal MonthlyIncentivesIfAny { get; set; }
+
+        [Column("yearly_incentives")]
+        public decimal YearlyIncentivesIfAny { get; set; }
+
+        [Column("other_perks")]
+        public decimal OtherPerksIfAny { get; set; }
+
+        [Column("notice_period")]
+        public int NoticePeriod { get; set; }
+
+        [Column("other_terms")]
         public string OtherTermsIfAny { get; set; }
 
+        [Column("partner_id")]
         public int PartnerId { get; set; }
     }
 }

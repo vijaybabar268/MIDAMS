@@ -432,4 +432,62 @@ namespace MIDAMS.Areas.Admin.ViewModels
 
         public int PartnerId { get; set; }
     }
+
+    // Partner Tearms and Conditions
+    public class TearmsConditionViewModel
+    {
+        public IEnumerable<PartnerTearmsCondition> PartnerTearmsConditions { get; set; }
+
+        public int PartnerId { get; set; }
+
+        public string PartnerName { get; set; }
+    }
+
+    public class TearmsConditionFormViewModel
+    {
+        public int Id { get; set; }
+
+        [Display(Name ="Profit Loss Sharing Percent")]
+        public decimal ProfitLossSharingPercent { get; set; }
+
+        [Display(Name = "Monthly Incentives")]
+        public decimal MonthlyIncentivesIfAny { get; set; }
+
+        [Display(Name = "Yearly Incentives")]
+        public decimal YearlyIncentivesIfAny { get; set; }
+
+        [Display(Name = "Other Perks")]
+        public decimal OtherPerksIfAny { get; set; }
+
+        [Display(Name = "Notice Period")]
+        public int NoticePeriod { get; set; }
+
+        [Display(Name = "Other Terms")]
+        public string OtherTermsIfAny { get; set; }
+
+        public int PartnerId { get; set; }
+    }
+
+    public class ViewTearmsConditionViewModel
+    {
+        [Display(Name = "Profit Loss Sharing Percent :-")]
+        public decimal ProfitLossSharingPercent { get; set; }
+
+        [Display(Name = "Monthly Incentives :-")]
+        public decimal MonthlyIncentivesIfAny { get; set; }
+
+        [Display(Name = "Yearly Incentives :-")]
+        public decimal YearlyIncentivesIfAny { get; set; }
+
+        [Display(Name = "Other Perks :-")]
+        public decimal OtherPerksIfAny { get; set; }
+
+        [Display(Name = "Notice Period :-")]
+        public int NoticePeriod { get; set; }
+
+        [Display(Name = "Other Terms :-")]
+        public string OtherTermsIfAny { get; set; }
+
+        public int PartnerId { get; set; }
+    }
 }

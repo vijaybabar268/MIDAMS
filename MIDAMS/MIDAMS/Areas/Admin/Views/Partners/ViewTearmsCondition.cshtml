@@ -1,0 +1,82 @@
+﻿@model MIDAMS.Areas.Admin.ViewModels.ViewTearmsConditionViewModel
+
+@{
+    ViewBag.Title = "Partner Tearms and Conditions";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="main-block">
+
+    <div class="info">
+        <hr />
+
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.ProfitLossSharingPercent, new { @class = "col-sm-4 col-form-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.ProfitLossSharingPercent, new { @class = "form-control", disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.MonthlyIncentivesIfAny, new { @class = "col-sm-4 col-form-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.MonthlyIncentivesIfAny, new { @class = "form-control", disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.YearlyIncentivesIfAny, new { @class = "col-sm-4 col-form-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.YearlyIncentivesIfAny, new { @class = "form-control", disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.OtherPerksIfAny, new { @class = "col-sm-4 col-form-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.OtherPerksIfAny, new { @class = "form-control", disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.NoticePeriod, new { @class = "col-sm-4 col-form-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.NoticePeriod, new { @class = "form-control", disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.OtherTermsIfAny, new { @class = "col-sm-4 col-form-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.OtherTermsIfAny, new { @class = "form-control", disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-12 text-center">
+                @Html.ActionLink("Back", "TearmsCondition", "Partners", new { id = Model.PartnerId }, new { @class = "btn btn-primary" })
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    .form-control {
+        border: none;
+        background: #fff !important;
+        box-shadow: none;
+    }
+</style>
