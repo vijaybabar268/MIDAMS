@@ -70,7 +70,7 @@ namespace MIDAMS.Areas.Admin.Controllers
             }
 
             string basePath = Server.MapPath("~");
-            string folderPath = "Upload\\";
+            string folderPath = "Assets\\Upload\\";
             string folderFullPath = basePath + "" + folderPath;
             string fillName = string.Format(DateTime.Now.Day + "" + DateTime.Now.Month + "" + DateTime.Now.Year + "" + DateTime.Now.Hour + "" + DateTime.Now.Minute + "" + DateTime.Now.Second + "" + Path.GetExtension(Photo.FileName));
 
@@ -237,6 +237,42 @@ namespace MIDAMS.Areas.Admin.Controllers
             _repo.RemoveEmployee(_repo.GetEmployee(id));
 
             return RedirectToAction("Index", "Employees");
+        }
+
+        public ActionResult Details(int id)
+        {
+            Employee employeeInDb = _repo.GetEmployee(id);
+
+            var viewModel = new EmployeeDetailsViewModel()
+            {
+                EducationQualifications = ManageDependancyData.GetEducationQualification(),
+                Designations = ManageDependancyData.GetDesignations(),
+                MaritalStatus = ManageDependancyData.GetMaritalStatus(),
+                Genders = ManageDependancyData.GetGenders(),
+                FirstName = employeeInDb.FirstName,
+                MiddleName = employeeInDb.MiddleName,
+                LastName = employeeInDb.LastName,
+                MotherName = employeeInDb.MotherName,
+                EducationQualificationId = employeeInDb.EducationQualificationId,
+                DesignationId = employeeInDb.DesignationId,
+                MaritalStatusId = employeeInDb.MaritalStatusId,
+                GenderId = employeeInDb.GenderId,
+                EmailId = employeeInDb.EmailId,
+                DateOfBirth = (DateTime)employeeInDb.DateOfBirth,
+                DateOfJoining = (DateTime)employeeInDb.DateOfJoining,
+                PresentAddress = employeeInDb.PresentAddress,
+                PermanentAddress = employeeInDb.PermanentAddress,
+                MobileNumber = employeeInDb.MobileNumber,
+                TelNumber = employeeInDb.TelNumber,
+                IndetificationMarkOnBody = employeeInDb.IndetificationMarkOnBody,
+                NameAndContactReference1 = employeeInDb.NameAndContactReference1,
+                NameAndContactReference2 = employeeInDb.NameAndContactReference2,
+                Photo = employeeInDb.Photo,
+                IsActive = employeeInDb.IsActive,
+                CreatedOn = employeeInDb.CreatedOn
+            };
+
+            return View("Details", viewModel);
         }
     }
 }

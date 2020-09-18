@@ -14,7 +14,7 @@
             @Html.HiddenFor(m => m.Id)
             @Html.AntiForgeryToken()
             <hr />
-            
+
             <div class="col-md-6">
                 <div class="form-group">
                     @Html.LabelFor(m => m.FirstName, new { @class = "col-sm-4 col-form-label" })
@@ -127,22 +127,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.PresentAddress, new { @class = "col-sm-4 col-form-label" })
-                    <div class="col-md-8">
-                        @Html.TextAreaFor(m => m.PresentAddress, new { @class = "form-control", rows = "4" })
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.PermanentAddress, new { @class = "col-sm-4 col-form-label" })
-                    <div class="col-md-8">
-                        @Html.TextAreaFor(m => m.PermanentAddress, new { @class = "form-control", rows = "4" })
-                    </div>
-                </div>
-            </div>
+
             <div class="col-md-6">
                 <div class="form-group">
                     @Html.LabelFor(m => m.NameAndContactReference1, new { @class = "col-sm-4 col-form-label" })
@@ -161,12 +146,28 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
+                    @Html.LabelFor(m => m.PresentAddress, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextAreaFor(m => m.PresentAddress, new { @class = "form-control", rows = "4" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.PermanentAddress, new { @class = "col-sm-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextAreaFor(m => m.PermanentAddress, new { @class = "form-control", rows = "4" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
                     @Html.LabelFor(m => m.Photo, new { @class = "col-sm-4 col-form-label" })
                     <div class="col-md-8">
                         @Html.TextBoxFor(m => m.Photo, new { @class = "", type = "file" })
                     </div>
                 </div>
-            </div>            
+            </div>
             <div class="form-group row">
                 <div class="col-md-12 text-center">
                     <input type="submit" class="btn btn-primary" value="Save" />

@@ -8,7 +8,7 @@
 
 <h2 class="adminTitle">@ViewBag.Title</h2>
 
-@Html.ActionLink("New", "New", "Employees", null, new { @class = "btn btn-primary commonNewAddBtn" })
+@Html.ActionLink("Add Employee", "New", "Employees", null, new { @class = "btn btn-primary commonNewAddBtn" })
 
 <div class="tableDiv">
     <table class="table table-bordered table-hover table-responsive table-striped">
@@ -24,16 +24,16 @@
                 <th>Gender</th>
                 <th>Education</th>
                 <th>Designation</th>
-                <th>Marital Status</th> 
-                @*<th>Mother</th>                               
-                <th>Present Address</th>
-                <th>Permanent Address</th>
-                <th>Tel No</th>
-                <th>Identification Mark on Body</th>
-                <th>Referance 1 Name & Contact</th>
-                <th>Referance 2 Name & Contact</th>*@
+                <th>Marital Status</th>
+                @*<th>Mother</th>
+                    <th>Present Address</th>
+                    <th>Permanent Address</th>
+                    <th>Tel No</th>
+                    <th>Identification Mark on Body</th>
+                    <th>Referance 1 Name & Contact</th>
+                    <th>Referance 2 Name & Contact</th>*@
                 <th>Status</th>
-                <th width="17%">Manage</th>
+                <th width="17%">Other Info</th>
                 <th width="13%">Action</th>
             </tr>
         </thead>
@@ -43,7 +43,9 @@
                 {
                     <tr>
                         <td>@srNo</td>
-                        <td><a href="#">@item.FirstName @item.MiddleName @item.LastName</a></td>
+                        <td>
+                            @Html.ActionLink(string.Format("{0} {1} {2}", item.FirstName, item.MiddleName, item.LastName), "Details", new { id = item.Id }, new { @class = "btn btn-link", Title = "Click me for more information." })
+                        </td>
                         <td>
                             <div class="imageContainer">
                                 <img height="120" width="125" src="@Request.Url.GetLeftPart(UriPartial.Authority)//@item.Photo" />
@@ -57,14 +59,14 @@
                         <td>@Model.EducationQualifications.FirstOrDefault(x => x.Id == item.EducationQualificationId).Name</td>
                         <td>@Model.Designations.FirstOrDefault(x => x.Id == item.DesignationId).Name</td>
                         <td>@Model.MaritalStatus.FirstOrDefault(x => x.Id == item.MaritalStatusId).Name</td>
-                        @*<td>@item.MotherName</td>                        
-                        <td>@item.DateOfJoining</td>
-                        <td>@item.PresentAddress</td>
-                        <td>@item.PermanentAddress</td>
-                        <td>@item.TelNumber</td>
-                        <td>@item.IndetificationMarkOnBody</td>
-                        <td>@item.NameAndContactReference1</td>
-                        <td>@item.NameAndContactReference2</td>*@
+                        @*<td>@item.MotherName</td>
+                            <td>@item.DateOfJoining</td>
+                            <td>@item.PresentAddress</td>
+                            <td>@item.PermanentAddress</td>
+                            <td>@item.TelNumber</td>
+                            <td>@item.IndetificationMarkOnBody</td>
+                            <td>@item.NameAndContactReference1</td>
+                            <td>@item.NameAndContactReference2</td>*@
                         <td>
                             @{
                                 if (item.IsActive)
